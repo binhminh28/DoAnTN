@@ -1,0 +1,36 @@
+
+
+
+Actor: 
+1. Khách Hàng (Fontend)
+	- Chỉnh Sửa thông tin tài khoản
+	- Đặt Hàng
+		+ Thêm vào giỏ hàng
+		+ Thanh toán đơn hàng
+	- Comment(nếu đủ tgian)
+2. Admin (Backend)
+	- Quản lý Sản phẩm:
+		+ Thêm Sản phẩm
+		+ Cập nhật sản phẩm (Nếu sản phẩm ko bán cập nhật thành không bán - ko xóa sp)
+		+ Danh sách sản phẩm
+	- Quản lý danh mục sản phẩm
+		+ Thêm danh mục sản phẩm
+		+ Cập nhật danh mục sản phẩm
+		+ Danh sách danh mục sp
+	- Quản lý thương hiệu:
+		+ Thêm thương hiệu
+		+ Cập nhật thương hiệu (Nếu Thương hiệu ko kinh doanh cập nhật thành ko kinh doanh - ko xóa)
+		+ danh sách thương hiệu
+	- Quản lý đơn hàng:
+		+ Duyệt đơn hàng
+		+ Xem danh sách đơn hàng
+	- Quản lý khách hàng:
+		+ Thêm Khách hàng 
+		+ Xem danh sách KH
+		+ Cập nhật thông tin KH
+	- Tạo báo cáo	
+	
+	
+	- Comment(nếu đủ tgian)		
+	- Quản lý quảng cáo (nếu đủ tgian)
+		+ Cập nhật các banner quảng cáo
