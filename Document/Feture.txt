@@ -2,13 +2,13 @@
 
 
 Actor: 
-1. Khách Hàng (Fontend)
+1. Khách Hàng
 	- Chỉnh Sửa thông tin tài khoản
 	- Đặt Hàng
 		+ Thêm vào giỏ hàng
 		+ Thanh toán đơn hàng
 	- Comment(nếu đủ tgian)
-2. Admin (Backend)
+2. Admin
 	- Quản lý Sản phẩm:
 		+ Thêm Sản phẩm
 		+ Cập nhật sản phẩm (Nếu sản phẩm ko bán cập nhật thành không bán - ko xóa sp)
