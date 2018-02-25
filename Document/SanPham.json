@@ -1,0 +1,38 @@
+
+
+[
+	{
+		"maSanPham":"SP01",
+		"tenSanPham":"Iphone 7s",
+		"info":{
+			"soLuong":20,
+			"imgUrl":"url",
+			"gioiThieu":"Gioi thieu Iphone7",
+			"gia":20000000,
+			"loai":["Iphone"]
+		}
+	},
+	
+]
+
+[
+	{
+		"maHoaDon":HD01,
+		"maKhachHang":"KH01",
+		"TongTien":38000000,
+		"ngay":"29/1/2018",
+		"ChiTietHoaDon":[
+			"CTHD01":[
+				"SP01",
+				1,
+				20000000
+			],
+			"CTHD02":[
+				"SP02",
+				1,
+				18000000
+			],
+		]
+	},
+	
+]

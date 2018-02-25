@@ -1,0 +1,56 @@
+
+[
+	{
+		"maKhachHang":"KH01",
+		"tenDangNhap":"Minh",
+		"password":"minhminh",
+		"loai":"KhachHang"
+		"info":[
+			"SDT":123465799,
+			"email":"minh@mail.com",
+			"diachi":["Ho Chi Minh"],
+			"gioiTinh":"Nam",
+			"ngaySinh":"02/08/1996"
+		]
+	},
+	{
+		"maKhachHang":"KH02",
+		"tenDangNhap":"minh1",
+		"password":"minh1",
+		"loai":"KhachHang"
+		"info":[
+			"SDT":123465799,
+			"email":"minh1@mail.com",
+			"diachi":["Ho Chi Minh"],
+			"gioiTinh":"Nam",
+			"ngaySinh":"02/08/1996"
+		]
+	},
+	{
+		"maKhachHang":"KH02",
+		"tenDangNhap":"minh2",
+		"password":"minh2",
+		"loai":"KhachHang"
+		"info":[
+			"SDT":123465799,
+			"email":"minh1@mail.com",
+			"diachi":["Ho Chi Minh"],
+			"gioiTinh":"Nam",
+			"ngaySinh":"02/08/1996"
+		]
+	},
+	{
+		"maKhachHang":"KH03",
+		"tenDangNhap":"minh3",
+		"password":"minh3",
+		"loai":"KhachHang"
+		"info":[
+			"SDT":123465799,
+			"email":"minh1@mail.com",
+			"diachi":["Ho Chi Minh"],
+			"gioiTinh":"Nam",
+			"ngaySinh":"02/08/1996"
+		]
+	}
+	
+]
