@@ -3,6 +3,10 @@ var session = require('express-session')
 var passport = require('passport');
 var index = require('./routes/index')
 var user = require('./routes/users')
+var adminvao = require('./routes/adminvao')
+var members = require('./routes/members')
+var product = require('./routes/product')
+var loginad = require('./routes/loginad')
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var app = express();
@@ -20,7 +24,11 @@ app.set('view engine', 'ejs');
 
 app.use(express.static('public'))
 app.use('/', index)
-app.use('/',user);
+app.use('/user',user);
+app.use('/adminvao',adminvao);
+app.use('/members',members);
+app.use('/loginad',loginad);
+app.use('/product',product);
 
 /* Local Strategy */
 app.post('/loginlc',passport.authenticate('local',{
