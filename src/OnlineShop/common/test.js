@@ -4,23 +4,46 @@ var uuid = require('uuid');
 var randomstring = require("randomstring");
 
 var docClient = new AWS.DynamoDB.DocumentClient();
-var id = uuid.v4() + randomstring.generate({
-    length: 128,
-    charset: 'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM_.-'
+
+countAll(function(count){
+    console.log("co tong cong: "+count+" item");
 })
-var params = {
-    TableName: "Users",
-    ProjectionExpression: "maKhachHang",
-    FilterExpression: "maKhachHang =:username",
-    ExpressionAttributeValues: {
-        ":username": "996209410536391",
+
+getItemPerPage("CongAnh2","5",2,function(data){
+    console.log(data);
+    // console.log("LastEvaluatedKey: "+data);
+    // console.log("last itemid: "+ data.Items[data.Count-1].id)
+})
+
+
+function getItemPerPage(TableName, lastItem ,pageSize, callback){
+    var params = {
+        TableName: TableName,
+        Limit: pageSize,
     }
-};
-docClient.scan(params, function (err, data) {
-    if (err) {
-        console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
-    } else {
-        if (data.Count > 0) console.log(data)
-        else console.log(false)
+    if(lastItem != null){
+        params.ExclusiveStartKey= {
+            "id":lastItem
+        }
     }
-});
+    console.log(params)
+        docClient.scan(params, function (err, data) {
+        if (err) {
+            console.log("Error Json: ", JSON.stringify(err, null, 2));
+        } else {
+            callback(data)
+        }
+    })
+}
+ function countAll(callback){
+    var params = {
+        TableName: "CongAnh2"
+    }
+    docClient.scan(params, function (err, data) {
+        if (err) {
+            console.log("Error Json: ", JSON.stringify(err, null, 2));
+        } else {
+            callback(data.Count);
+        }
+    })
+}

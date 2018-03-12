@@ -1,0 +1,44 @@
+<% layout('../../layoutAdmin') %>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-table"></i> Danh sách sản phẩm</div>
+        <div class="card-body">
+            <table class="ui striped table table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Giá</th>
+                        <th>Loại</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach(function (pd) { %>
+                        <tr>
+                            <td>
+                                <img src="" width="150px" />
+                            </td>
+                            <td>
+                                <%= pd.tenSanPham%>
+                            </td>
+                            <td>
+                                <%= pd.info.gia%>
+                            </td>
+                            <td>
+                                <%= pd.info.loai%>
+                            </td>
+                            <td>
+                                <p style="color: #4800ff">
+                                    <a href="/admin/product/edit/<%= pd.maSanPham %>" id="Edit">Edit</a> |
+                                    <a href="/admin/product/delete/<%= pd.maSanPham %>" id="Delete" onclick="return confirm('Are you sure you want to remove <%= pd.tenSanPham%>? ')">Delete</a>
+                                </p>
+                            </td>
+                        </tr>
+                        <% })%>
+                </tbody>
+            </table>
+            <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
+        </div>
+    </div>

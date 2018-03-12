@@ -1,0 +1,34 @@
+<% layout('../../layoutAdmin') %>
+
+<h2>Create Product</h2>
+
+    <form class="ui form" action="/admin/createproduct/save" method="POST">
+        <!-- <div class="field">
+            <label>ID</label>
+            <input readonly type="text" name="masanpham" placeholder="Mã sản phẩm">
+        </div> -->
+        <div class="ui error message"></div>
+        <div class="field">
+            <label>Tên</label>
+            <input type="text" name="tensanpham" placeholder="Tên sản phẩm">
+        </div>
+        <div class="field">
+            <label>Giá</label>
+            <input type="text" name="gia" placeholder="Giá">
+        </div>
+
+        <div class="field">
+            <label>Loại</label>
+            <select class="ui fluid selection dropdown" id="select" name ="loai">
+                <option value="">Chọn loại sản phẩm</option>
+                <% listCate.forEach(function(item){ %>
+                    <option value="<%= item.MaLoai %>"><%= item.TenLoai %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="field">
+                <label>Mô tả</label>
+                <textarea name="gioithieu" placeholder="Tên SP" id="ckeditor"></textarea>
+            </div>
+        <button class="ui button" type="submit">Submit</button>
+    </form>

@@ -55,7 +55,26 @@ exports.checkRole = function (username, callback) {
     });
 }
 
-exports.Register = function(id, email, name, gender, callback){
+function CheckCategoryExist(id, callback){
+    var params={
+        TableName:"LoaiSanPham",
+        ProjectionExpression:"MaLoai, TenLoai",
+        FilterExpression:"MaLoai = :ma",
+        ExpressionAttributeValues:{
+            ":ma":id
+        }
+    }
+    docClient.scan(params, function (err, data) {
+        if (err) {
+            callback(true)
+        } else {
+            if (data.Count > 0) callback(false)
+            else callback(true)
+        }
+    });
+}
+
+exports.Register = function (id, email, name, gender, callback) {
     // var id = uuid.v4() + randomstring.generate({
     //     length: 128,
     //     charset: 'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM_.-'
@@ -65,11 +84,11 @@ exports.Register = function(id, email, name, gender, callback){
         Item: {
             "maKhachHang": id,
             "tenKhachHang": name,
-            "tenDangNhap":email,
+            "tenDangNhap": email,
             "email": email,
-            "loai":"KhachHang",
-            "info":{
-                "gioiTinh":gender
+            "loai": "KhachHang",
+            "info": {
+                "gioiTinh": gender
             }
         }
     };
@@ -96,11 +115,152 @@ exports.FindOne = function (username, callback) {
             console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
         } else {
             if (data.Count > 0) {
-                data.Items.forEach(function(item){
-                    callback(item.maKhachHang) 
+                data.Items.forEach(function (item) {
+                    callback(item.maKhachHang)
                 })
             }
             else callback(false)
         }
     });
 }
+
+exports.GetAllProduct = function (callback) {
+    var params = {
+        TableName: "SanPham",
+        ProjectionExpression: "maSanPham, tenSanPham, info",
+    }
+    docClient.scan(params, function (err, data) {
+        if (err) {
+            console.log("Error Json: ", JSON.stringify(err, null, 2));
+        } else {
+            if (data.Count > 0)
+                callback(false, data)
+            else
+                callback(true)
+        }
+    })
+}
+
+exports.GetAllCategory = function(callback){
+    var params={
+        TableName:"LoaiSanPham",
+        ProjectionExpression:"MaLoai, TenLoai"
+    };
+    docClient.scan(params, function(err, data){
+        if(err){
+            console.log("Error Json", JSON.stringify(err,null,2));
+        }else{
+            if(data.Count>0)
+                callback(false, data)
+            else
+                callback(true)
+        }
+    })
+}
+
+exports.GetOneProduct = function (masp, callback) {
+    var params = {
+        TableName: "SanPham",
+        ProjectionExpression: "maSanPham, tenSanPham, info",
+        FilterExpression: "maSanPham = :ma",
+        ExpressionAttributeValues: {
+            ":ma": masp
+        }
+    }
+    docClient.scan(params, function (err, data) {
+        if (err) {
+            console.log("Error Json: ", JSON.stringify(err, null, 2));
+        } else {
+            if (data.Count > 0)
+                callback(false, data)
+            else
+                callback(true)
+        }
+    })
+}
+
+exports.UpdateProductItem = function (product, callback) {
+    var params = {
+        TableName: "SanPham",
+        Key: {
+            "maSanPham": product.masanpham
+        },
+        UpdateExpression: `set
+                            tenSanPham= :ten,
+                            info.gia = :gia, 
+                            info.gioithieu = :gioithieu,
+                            info.loai = :loai`,
+        ExpressionAttributeValues: {
+            ":ten":product.tensanpham,
+            ":gia": product.gia,
+            ":gioithieu": product.gioithieu,
+            ":loai":product.loai
+        },
+        ReturnValues: "UPDATED_NEW"
+    };
+
+    console.log("Updating the item...");
+    docClient.update(params, function (err, data) {
+        if (err) {
+            console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+            console.log(product.masanpham)
+            callback(true)
+        } else {
+            callback(false);
+        }
+    });
+}
+
+exports.CreateProductItem = function (product, callback) {
+    var id = uuid.v4() + randomstring.generate({
+        length: 128,
+        charset: 'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM_.-'
+    })
+    CheckCategoryExist(product.loai, function(cb){
+        if(cb){
+            console.error("Doesn't exist this category")
+            callback(false)
+        }else{
+            var params = {
+                TableName: 'SanPham',
+                Item: {
+                    "maSanPham": id,
+                    "tenSanPham": product.tensanpham,
+                    "info": {
+                        "gia": Number.parseFloat(product.gia),
+                        "gioithieu": product.gioithieu,
+                        "loai": product.loai
+                    }
+        
+                }
+            };
+            docClient.put(params, function (err, data) {
+                if (err) {
+                    console.error("Error JSON:", JSON.stringify(err, null, 2));
+                    callback(true)
+                } else {
+                    callback(false);
+                }
+            });
+        }
+    })
+}
+
+exports.DeleteProduct = function (ma, callback) {
+    var params = {
+        TableName: "SanPham",
+        Key: {
+            "maSanPham": ma
+        }
+    }
+    docClient.delete(params, function (err, data) {
+        if (err) {
+            console.error("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            callback(false);
+        }
+    })
+}
+
+ 

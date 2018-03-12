@@ -8,29 +8,29 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.get('/admin', isAuthenticated, function (req, res) {
-  res.status(200).json({
-    status: 'Login successful!' + req.user
-  });
-})
+// router.get('/admin', isAuthenticated, function (req, res) {
+//   res.status(200).json({
+//     status: 'Login successful!' + req.user
+//   });
+// })
 
-function isAuthenticated(req, res, next) {
-  if (req.user) {
-    DB.checkRole(req.user, function (err) {
-      if (err) {
-        return res.status(401).json({
-          error: 'Khong phai admin ' + req.user
-        })
-      } else {
-        return next();
-      }
-    })
-  } else {
-    return res.status(401).json({
-      error: 'Chua Dang Nhap'
-    })
-  }
-}
+// function isAuthenticated(req, res, next) {
+//   if (req.user) {
+//     DB.checkRole(req.user, function (err) {
+//       if (err) {
+//         return res.status(401).json({
+//           error: 'Khong phai admin ' + req.user
+//         })
+//       } else {
+//         return next();
+//       }
+//     })
+//   } else {
+//     return res.status(401).json({
+//       error: 'Chua Dang Nhap'
+//     })
+//   }
+// }
 // function check(username) {
 //   temp = false;
 //   DB.checkRole(username, function (err, callback) {
