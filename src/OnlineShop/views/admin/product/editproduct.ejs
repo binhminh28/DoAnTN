@@ -5,15 +5,15 @@
         <div class="ui error message"></div>
         <div class="field">
             <label>Mã Sản Phẩm</label>
-            <input readonly type="text" name="masanpham" placeholder="Mã SP" value="<%= pd.maSanPham %>">
+            <input readonly type="text" name="masanpham" placeholder="Mã SP" value="<%= pd._id %>">
         </div>
         <div class="field">
             <label>Tên Sản Phẩm</label>
-            <input type="text" name="tensanpham" placeholder="Tên SP" value="<%= pd.tenSanPham %>">
+            <input type="text" name="tensanpham" placeholder="Tên SP" value="<%= pd.productName %>">
         </div>
         <div class="field">
             <label>Giá</label>
-            <input type="text" name="gia" placeholder="Giá sản phẩm" value="<%= pd.info.gia %>">
+            <input type="text" name="gia" placeholder="Giá sản phẩm" value="<%= pd.price %>">
         </div>
 
         <div class="field">
@@ -21,7 +21,7 @@
             <select class="ui fluid selection dropdown" id="select" name ="loai">
                 <option value="">Chọn loại sản phẩm</option>
                 <% listCate.forEach(function(item){ %>
-                    <option value="<%= item.MaLoai %>"><%= item.TenLoai %></option>
+                    <option value="<%= item.CateId %>"><%= item.Name %></option>
                 <% }) %>
             </select>
         </div>

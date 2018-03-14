@@ -21,18 +21,18 @@
                                 <img src="" width="150px" />
                             </td>
                             <td>
-                                <%= pd.tenSanPham%>
+                                <%= pd.productName%>
                             </td>
                             <td>
-                                <%= pd.info.gia%>
+                                <%= pd.price%>
                             </td>
                             <td>
-                                <%= pd.info.loai%>
+                                <%= pd.loai%>
                             </td>
                             <td>
                                 <p style="color: #4800ff">
-                                    <a href="/admin/product/edit/<%= pd.maSanPham %>" id="Edit">Edit</a> |
-                                    <a href="/admin/product/delete/<%= pd.maSanPham %>" id="Delete" onclick="return confirm('Are you sure you want to remove <%= pd.tenSanPham%>? ')">Delete</a>
+                                    <a href="/admin/product/edit/<%= pd._id %>" id="Edit">Edit</a> |
+                                    <a href="/admin/product/delete/<%= pd._id %>" id="Delete" onclick="return confirm('Are you sure you want to remove <%= pd.productName%>? ')">Delete</a>
                                 </p>
                             </td>
                         </tr>
@@ -40,5 +40,32 @@
                 </tbody>
             </table>
             <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
+            <% if (pageCount > 1) { %>  
+                <ul class="pagination">  
+                  <% if (currentPage > 1) { %>
+                      <li><a href="/admin/?page=1">&laquo;</a></li>
+                  <% } %>
+                  <% var i = 1;
+                  if (currentPage > 5) {
+                  i = +currentPage - 4;
+                  } %>
+                  <% if (i !== 1) { %>
+                      <li class="disabled"><a href="#">...</a></li>
+                  <% } %>
+                  <% for (i; i<=pageCount; i++) { %>
+                    <% if (currentPage == i) { %>
+                        <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span></li>
+                    <% } else { %>
+                        <li><a href="/admin/?page=<%= i %>"><%= i %></a></li>
+                    <% } %>
+                    <% if (i == (+currentPage + 4)) { %>
+                        <li class="disabled"><a href="#">...</a></li>
+                    <% break; } %>
+                  <% } %>
+                  <% if (currentPage != pageCount) { %>
+                      <li><a href="/admin/?page=<%= pageCount %>">&raquo;</a></li>
+                  <% } %>
+                </ul>  
+                <% } %>  
         </div>
     </div>

@@ -22,7 +22,7 @@
             <select class="ui fluid selection dropdown" id="select" name ="loai">
                 <option value="">Chọn loại sản phẩm</option>
                 <% listCate.forEach(function(item){ %>
-                    <option value="<%= item.MaLoai %>"><%= item.TenLoai %></option>
+                    <option value="<%= item.CateId %>"><%= item.Name %></option>
                 <% }) %>
             </select>
         </div>

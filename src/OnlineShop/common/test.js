@@ -1,49 +1,25 @@
-var AWS = require("aws-sdk");
-AWS.config.loadFromPath('./AWSConfig.json');
+
 var uuid = require('uuid');
 var randomstring = require("randomstring");
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://cluster0-shard-00-00-z89mh.mongodb.net:27017/?ssl=true";
+var db
 
-var docClient = new AWS.DynamoDB.DocumentClient();
-
-countAll(function(count){
-    console.log("co tong cong: "+count+" item");
-})
-
-getItemPerPage("CongAnh2","5",2,function(data){
-    console.log(data);
-    // console.log("LastEvaluatedKey: "+data);
-    // console.log("last itemid: "+ data.Items[data.Count-1].id)
-})
-
-
-function getItemPerPage(TableName, lastItem ,pageSize, callback){
-    var params = {
-        TableName: TableName,
-        Limit: pageSize,
+MongoClient.connect(url, {
+    auth: {
+        user: 'binhm63',
+        password: 'BlackBerry8310+',
     }
-    if(lastItem != null){
-        params.ExclusiveStartKey= {
-            "id":lastItem
-        }
-    }
-    console.log(params)
-        docClient.scan(params, function (err, data) {
-        if (err) {
-            console.log("Error Json: ", JSON.stringify(err, null, 2));
-        } else {
-            callback(data)
+}, (err, client) => {
+    if (err) return console.log(err)
+    db = client.db('onlineshop')
+
+    var cursor = db.collection('Product').count(function(err,data){
+        if(!err){
+            console.log(data)
         }
     })
-}
- function countAll(callback){
-    var params = {
-        TableName: "CongAnh2"
-    }
-    docClient.scan(params, function (err, data) {
-        if (err) {
-            console.log("Error Json: ", JSON.stringify(err, null, 2));
-        } else {
-            callback(data.Count);
-        }
-    })
-}
+
+})
+
+

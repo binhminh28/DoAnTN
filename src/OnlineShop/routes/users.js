@@ -6,7 +6,7 @@ var DB = require('../common/workwDB');
 
 var router = express.Router();
 
-DB.newConnection();
+//DB.newConnection();
 /* Local Strategy */
 passport.use(new localStrategy(
   (username, password, done) => {
@@ -36,16 +36,21 @@ passport.use(new passportfb({
      */
     DB.FindOne(profile._json.id,function(user){
       if(user) {
-        return done(null, profile._json.email)/**account fb Admin <-> KhachHang */
+        console.log("1")
+        return done(null, profile._json.name)/**account fb Admin <-> KhachHang */
       }else{
         email = profile._json.email;
         if(profile._json.email===undefined){
+          console.log("2")
           email = profile._json.id
         }
+        console.log("3")
         DB.Register(profile._json.id, email, profile._json.name, profile._json.gender, function(err){
           if(err){
+            console.log("4")
             return done(null, false)
           }else{
+            console.log("5")
             console.log('Luu moi')
             return done(null, profile._json.name)
           }
