@@ -18,7 +18,7 @@ router.get('/admin', function (req, res) {
     } else {
       res.render("./admin/product/listproduct", { products: data,
           pageSize: pageSize,
-          pageCount: total / pageSize,
+          pageCount: Math.ceil(total / pageSize),
           currentPage: currentPage });
     }
   })
