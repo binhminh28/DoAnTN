@@ -3,11 +3,22 @@ var router = express.Router();
 var DB = require('../common/workwDB');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express', hello: req.user });
-});
+// router.get('/', function (req, res, next) {
+//   res.render('index', { title: 'Express', hello: req.user });
+// });
 
 
+router.get('/', function (req, res) {
+            DB.GetAllProduct(function (cb, listproduct) {
+                if (cb) {
+                    res.status(400).json("Can't get Product")
+                } else {
+                    res.render("index", { products: listproduct, hello: req.user })
+                }
+            })
+
+        })
+//trc t mới chuyển qua đ biết có bỏ vô chưa nữa ~
 // router.get('/admin', isAuthenticated, function (req, res) {
 //   res.status(200).json({
 //     status: 'Login successful!' + req.user

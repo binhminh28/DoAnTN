@@ -8,8 +8,8 @@ var db
 
 MongoClient.connect(url, {
     auth: {
-        user: '',
-        password: '',
+        user: 'binhm63',
+        password: 'BlackBerry8310+',
     }
 }, (err, client) => {
     if (err) return console.log(err)
@@ -116,6 +116,20 @@ exports.Register = function (id, email, name, gender, callback) {
 
 exports.GetAllCategory = function (callback) {
     var cursor = db.collection('Category').find().toArray(function (err, data) {
+        if (err) {
+            console.log("Error Json", JSON.stringify(err, null, 2));
+        } else {
+            if (data.length > 0)
+                callback(false, data)
+            else
+                callback(true)
+        }
+    })
+}
+
+
+exports.GetAllProduct = function (callback) {
+    var cursor = db.collection('Product').find().toArray(function (err, data) {
         if (err) {
             console.log("Error Json", JSON.stringify(err, null, 2));
         } else {

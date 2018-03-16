@@ -14,12 +14,16 @@ MongoClient.connect(url, {
     if (err) return console.log(err)
     db = client.db('onlineshop')
 
-    var cursor = db.collection('Product').count(function(err,data){
-        if(!err){
-            console.log(data)
+    var cursor = db.collection('Product').find().toArray(function (err, data) {
+        if (err) {
+            console.log("Error Json", JSON.stringify(err, null, 2));
+        } else {
+            if (data.length > 0)
+                //callback(false, data)
+                console.log(data)
         }
     })
-
 })
+
 
 

@@ -59,7 +59,7 @@
                               <form><input class="search-submit" type="submit" value=""><input class="search-input" placeholder="Enter your search term..." type="text" value="" name="search"></form>
                            </li>
                            <li class="option-cart">
-                              <a href="#" class="cart-icon">cart <span class="cart_no">02</span></a>
+                              <a href="#" class="cart-icon">cart <span class="cart_no" id="select"></span></a>
                               <ul class="option-cart-item">
                                  <li>
                                     <div class="cart-item">
@@ -76,18 +76,22 @@
                                  </li>
                                  <li>
                                     <div class="cart-item">
-                                       <div class="image"><img src="images/products/thum/products-02.png" alt=""></div>
-                                       <div class="item-description">
-                                          <p class="name">Lincoln chair</p>
-                                          <p>Size: <span class="light-red">One size</span><br>Quantity: <span class="light-red">01</span></p>
-                                       </div>
-                                       <div class="right">
-                                          <p class="price">$30.00</p>
-                                          <a href="#" class="remove"><img src="images/remove.png" alt="remove"></a>
-                                       </div>
+                                       <!--<div class="image"><img src="images/products/thum/products-02.png" alt=""></div>-->
+                                       <!--<div class="item-description">-->
+                                          <!--<p class="name">Lincoln chair</p>-->
+                                          <!--<p>Size: <span class="light-red">One size</span><br>Quantity: <span class="light-red">01</span></p>-->
+                                       <!--</div>-->
+                                       <!--<div class="right">-->
+                                          <!--<p class="price">$30.00</p>-->
+                                          <!--<a href="#" class="remove"><img src="images/remove.png" alt="remove"></a>-->
+                                       <!--</div>-->
+                                       <!--<div class="right">-->
+                                          <!--<p class="price">$30.00</p>-->
+                                          <!--<a href="#" class="remove"><img src="images/remove.png" alt="remove"></a>-->
+                                       <!--</div>-->
                                     </div>
                                  </li>
-                                 <li><span class="total">Total <strong>$60.00</strong></span><button class="checkout" onClick="location.href='checkout.html'">CheckOut</button></li>
+                                 <li><span class="total">Total <strong id="price"></strong></span><button class="checkout" onClick="location.href='checkout.html'">CheckOut</button></li>
                               </ul>
                            </li>
                         </ul>
@@ -218,79 +222,19 @@
                   <ul id="hot">
                      <li>
                         <div class="row">
+                            <% products.forEach(function (pd) { %>
                            <div class="col-md-3 col-sm-6">
                               <div class="products">
-                                 <div class="offer">- %20</div>
-                                 <div class="thumbnail"><a href="details.html"><img src="images/products/small/products-01.png" alt="Product Name"></a></div>
-                                 <div class="productname">Iphone 5s Gold 32 Gb 2013</div>
-                                 <h4 class="price">$451.00</h4>
-                                 <div class="button_group"><button class="button add-cart" type="button">Add To Cart</button><button class="button compare" type="button"><i class="fa fa-exchange"></i></button><button class="button wishlist" type="button"><i class="fa fa-heart-o"></i></button></div>
+                                 <div class="thumbnail"><a href=""><img src="<%= pd.imgUrl[0]%>" alt="Product Name" width="200"></a></div>
+                                 <div class="productname"><%= pd.productName%></div>
+                                 <h4 class="prices" data_value="451.00"> <%= pd.price%></h4>
+                                 <div class="button_group"><button class="add-cart" type="button"  data-link="<%= pd._id%>">Add To Cart</button><button class="button compare" type="button"><i class="fa fa-exchange"></i></button><button class="button wishlist" type="button"><i class="fa fa-heart-o"></i></button></div>
                               </div>
+
                            </div>
-                           <div class="col-md-3 col-sm-6">
-                              <div class="products">
-                                 <div class="thumbnail"><a href="details.html"><img src="images/products/small/products-02.png" alt="Product Name"></a></div>
-                                 <div class="productname">Iphone 5s Gold 32 Gb 2013</div>
-                                 <h4 class="price">$451.00</h4>
-                                 <div class="button_group"><button class="button add-cart" type="button">Add To Cart</button><button class="button compare" type="button"><i class="fa fa-exchange"></i></button><button class="button wishlist" type="button"><i class="fa fa-heart-o"></i></button></div>
-                              </div>
-                           </div>
-                           <div class="col-md-3 col-sm-6">
-                              <div class="products">
-                                 <div class="offer">New</div>
-                                 <div class="thumbnail"><a href="details.html"><img src="images/products/small/products-03.png" alt="Product Name"></a></div>
-                                 <div class="productname">Iphone 5s Gold 32 Gb 2013</div>
-                                 <h4 class="price">$451.00</h4>
-                                 <div class="button_group"><button class="button add-cart" type="button">Add To Cart</button><button class="button compare" type="button"><i class="fa fa-exchange"></i></button><button class="button wishlist" type="button"><i class="fa fa-heart-o"></i></button></div>
-                              </div>
-                           </div>
-                           <div class="col-md-3 col-sm-6">
-                              <div class="products">
-                                 <div class="thumbnail"><a href="details.html"><img src="images/products/small/products-04.png" alt="Product Name"></a></div>
-                                 <div class="productname">Iphone 5s Gold 32 Gb 2013</div>
-                                 <h4 class="price">$451.00</h4>
-                                 <div class="button_group"><button class="button add-cart" type="button">Add To Cart</button><button class="button compare" type="button"><i class="fa fa-exchange"></i></button><button class="button wishlist" type="button"><i class="fa fa-heart-o"></i></button></div>
-                              </div>
-                           </div>
+                            <% })%>
                         </div>
-                     </li>
-                     <li>
-                        <div class="row">
-                           <div class="col-md-3 col-sm-6">
-                              <div class="products">
-                                 <div class="offer">- %20</div>
-                                 <div class="thumbnail"><a href="details.html"><img src="images/products/small/products-01.png" alt="Product Name"></a></div>
-                                 <div class="productname">Iphone 5s Gold 32 Gb 2013</div>
-                                 <h4 class="price">$451.00</h4>
-                                 <div class="button_group"><button class="button add-cart" type="button">Add To Cart</button><button class="button compare" type="button"><i class="fa fa-exchange"></i></button><button class="button wishlist" type="button"><i class="fa fa-heart-o"></i></button></div>
-                              </div>
-                           </div>
-                           <div class="col-md-3 col-sm-6">
-                              <div class="products">
-                                 <div class="thumbnail"><a href="details.html"><img src="images/products/small/products-02.png" alt="Product Name"></a></div>
-                                 <div class="productname">Iphone 5s Gold 32 Gb 2013</div>
-                                 <h4 class="price">$451.00</h4>
-                                 <div class="button_group"><button class="button add-cart" type="button">Add To Cart</button><button class="button compare" type="button"><i class="fa fa-exchange"></i></button><button class="button wishlist" type="button"><i class="fa fa-heart-o"></i></button></div>
-                              </div>
-                           </div>
-                           <div class="col-md-3 col-sm-6">
-                              <div class="products">
-                                 <div class="offer">New</div>
-                                 <div class="thumbnail"><a href="details.html"><img src="images/products/small/products-03.png" alt="Product Name"></a></div>
-                                 <div class="productname">Iphone 5s Gold 32 Gb 2013</div>
-                                 <h4 class="price">$451.00</h4>
-                                 <div class="button_group"><button class="button add-cart" type="button">Add To Cart</button><button class="button compare" type="button"><i class="fa fa-exchange"></i></button><button class="button wishlist" type="button"><i class="fa fa-heart-o"></i></button></div>
-                              </div>
-                           </div>
-                           <div class="col-md-3 col-sm-6">
-                              <div class="products">
-                                 <div class="thumbnail"><a href="details.html"><img src="images/products/small/products-04.png" alt="Product Name"></a></div>
-                                 <div class="productname">Iphone 5s Gold 32 Gb 2013</div>
-                                 <h4 class="price">$451.00</h4>
-                                 <div class="button_group"><button class="button add-cart" type="button">Add To Cart</button><button class="button compare" type="button"><i class="fa fa-exchange"></i></button><button class="button wishlist" type="button"><i class="fa fa-heart-o"></i></button></div>
-                              </div>
-                           </div>
-                        </div>
+
                      </li>
                   </ul>
                </div>
@@ -437,6 +381,64 @@
 	  <script type="text/javascript" src="/js/jquery.sequence-min.js"></script>
 	  <script type="text/javascript" src="/js/jquery.carouFredSel-6.2.1-packed.js"></script>
 	  <script defer src="/js/jquery.flexslider.js"></script>
+
+      <!--<script  type="text/javascript" >-->
+          <!--function clickCounter() {-->
+              <!--if(typeof(Storage) !== "undefined") {-->
+                  <!--if (sessionStorage.clickcount) {-->
+                      <!--sessionStorage.clickcount = Number(sessionStorage.clickcount)+1;-->
+                  <!--} else {-->
+                      <!--sessionStorage.clickcount = 1;-->
+                  <!--}-->
+                  <!--document.getElementById("select").innerHTML = sessionStorage.clickcount ;-->
+              <!--} else {-->
+                  <!--document.getElementById("select").innerHTML = "Sorry, your browser does not support web storage...";-->
+              <!--}-->
+          <!--}-->
+      <!--</script>-->
+      <script>
+          $(function(){
+              $(".add-cart").click(function(){
+                  var idproduct = $(this).attr('data-link');
+                  var giohang =[];
+                  if($.cookie('giohang') === undefined){
+                      var item = {
+                          _id:idproduct,
+                          sl:1
+                      }
+                      giohang.push(item);
+                      $.cookie('giohang',JSON.stringify(giohang));
+                      loadgiohang();
+                  }else {
+                      giohang = JSON.parse($.cookie('giohang'));
+                      for (var i = 0, len = giohang.length; i < len; i++) {
+                          if (giohang[i].id === idproduct)
+                          {
+                              giohang[i].sl++;
+                              $.cookie('giohang',JSON.stringify(giohang));
+                              loadgiohang();
+                              return document.getElementById("select").innerHTML =giohang[i].sl++  ;
+                          }
+                      }
+                      var item = {
+                          _id:idproduct,
+                          sl:1
+                      }
+                      giohang.push(item);
+                      $.cookie('giohang',JSON.stringify(giohang));
+                      loadgiohang();
+                  }
+              })
+              function loadgiohang(){
+                  var giohang = JSON.parse($.cookie('giohang'));
+                  // set gio hang
+                  $('.cart_no').text(giohang.length);
+              }
+              loadgiohang();
+          });
+
+      </script>
+
 	  <script type="text/javascript" src="/js/script.min.js" ></script>
    </body>
 </html>
