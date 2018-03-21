@@ -19,7 +19,9 @@ router.get('/admin', function (req, res) {
       res.render("./admin/product/listproduct", { products: data,
           pageSize: pageSize,
           pageCount: Math.ceil(total / pageSize),
-          currentPage: currentPage });
+          currentPage: currentPage,
+          message: req.flash('message')
+         });
     }
   })
 });
@@ -39,12 +41,20 @@ router.post('/admin/createproduct/save', function (req, res) {
     tensanpham: req.body.tensanpham,
     gia: req.body.gia,
     gioithieu: req.body.gioithieu,
-    loai: req.body.loai
+    category: req.body.loai,
+    subcategory:req.body.loai2.substr(7),
+    sizeS:req.body.S,
+    sizeM:req.body.M,
+    sizeL:req.body.L,
+    sizeXL:req.body.XL
+
   };
+  console.log(product)
   DB.CreateProductItem(product, function (cb) {
     if (cb) {
       res.status(400).json("Can't create product")
     } else {
+      req.flash("message", "You just added 1 product to your list product")
       res.redirect("/admin");
     }
   })

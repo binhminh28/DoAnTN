@@ -209,7 +209,7 @@ exports.CreateProductItem = function (product, callback) {
     //     length: 128,
     //     charset: 'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM_.-'
     // })
-    CheckCategoryExist(product.loai, function (cb) {
+    CheckCategoryExist(product.category, function (cb) {
         if (cb) {
             console.error("Doesn't exist this category")
             callback(false)
@@ -218,13 +218,14 @@ exports.CreateProductItem = function (product, callback) {
                 productName: product.tensanpham,
                 price: Number.parseFloat(product.gia),
                 Description: product.gioithieu,
-                loai: product.loai
+                category: [product.category, Number.parseInt(product.subcategory)]
             };
             var cursor = db.collection('Product').insertOne(params, function (err, data) {
                 if (err) {
                     console.error("Error JSON:", JSON.stringify(err, null, 2));
                     callback(true)
                 } else {
+                    console.log("Success")
                     callback(false);
                 }
             })
