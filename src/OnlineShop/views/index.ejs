@@ -225,9 +225,9 @@
                             <% products.forEach(function (pd) { %>
                            <div class="col-md-3 col-sm-6">
                               <div class="products">
-                                 <div class="thumbnail"><a href=""><img src="<%= pd.imgUrl[0]%>" alt="Product Name" width="200"></a></div>
+                                 <div class="thumbnail"><a href="/detail/<%= pd._id %>"><img src="<%= pd.imgUrl[0]%>" alt="Product Name" width="200"></a></div>
                                  <div class="productname"><%= pd.productName%></div>
-                                 <h4 class="prices" data_value="451.00"> <%= pd.price%></h4>
+                                 <h4 class="price" data_value="451.00"> <%= pd.price%></h4>
                                  <div class="button_group"><button class="add-cart" type="button"  data-link="<%= pd._id%>">Add To Cart</button><button class="button compare" type="button"><i class="fa fa-exchange"></i></button><button class="button wishlist" type="button"><i class="fa fa-heart-o"></i></button></div>
                               </div>
 

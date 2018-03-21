@@ -18,6 +18,22 @@ router.get('/', function (req, res) {
             })
 
         })
+router.get('/detail/:id', function (req, res) {
+    var id = req.params.id;
+    DB.GetOneProduct(id, function (cb, data) {
+        if (cb) {
+            res.status(400).json('product not found');
+        } else {
+            DB.GetAllProduct(function (cb, listCate) {
+                if (cb) {
+                    res.status(400).json("Can't get Category")
+                } else {
+                    res.render("detail", { products: data, listCate: listCate, hello: req.user })
+                }
+            })
+        }
+    })
+})
 //trc t mới chuyển qua đ biết có bỏ vô chưa nữa ~
 // router.get('/admin', isAuthenticated, function (req, res) {
 //   res.status(200).json({

@@ -7,6 +7,7 @@ var flash = require('connect-flash');
 var index = require('./routes/index')
 var user = require('./routes/users')
 var admin = require('./routes/admin/product')
+var detail = require('./routes/detail')
 
 var app = express();
 var validatorOption ={};
@@ -28,6 +29,7 @@ app.use(express.static('public'))
 app.use('/', index)
 app.use('/',user);
 app.use('/',admin);
+app.use('/detail',detail);
 
 /* Local Strategy */
 app.post('/loginlc',passport.authenticate('local',{
