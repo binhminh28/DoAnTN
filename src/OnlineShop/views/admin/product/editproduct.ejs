@@ -1,33 +1,96 @@
 <% layout('../../layoutAdmin') %>
 
     <% products.forEach(function (pd) { %>
-    <form class="ui form" action="/admin/editproduct/save" method="POST">
+    <form class="ui form" action="/admin/editproduct/save" method="POST" ng-app="myApp">
+        <h2 class="ui dividing header">Update Product</h2>
         <div class="ui error message"></div>
         <div class="field">
-            <label>Mã Sản Phẩm</label>
+            <label>ID</label>
             <input readonly type="text" name="masanpham" placeholder="Mã SP" value="<%= pd._id %>">
         </div>
         <div class="field">
-            <label>Tên Sản Phẩm</label>
+            <label>Name</label>
             <input type="text" name="tensanpham" placeholder="Tên SP" value="<%= pd.productName %>">
         </div>
         <div class="field">
-            <label>Giá</label>
-            <input type="text" name="gia" placeholder="Giá sản phẩm" value="<%= pd.price %>">
+            <label>Amount</label>
+            <div class="ui right labeled input ">
+                <label for="amount" class="ui label">$</label>
+                <input type="text" placeholder="Amount" id="amount" name="gia" value="<%= pd.price %>">
+                <div class="ui basic label">.00</div>
+            </div>
         </div>
 
-        <div class="field">
-            <label>Loại</label>
-            <select class="ui fluid selection dropdown" id="select" name ="loai">
-                <option value="">Chọn loại sản phẩm</option>
-                <% listCate.forEach(function(item){ %>
-                    <option value="<%= item.CateId %>"><%= item.Name %></option>
+        <div  ng-controller="myCtrl" class="field">
+            <label>Category</label>
+            <select class="ui fluid selection dropdown" id="select" name="loai" data-ng-model="option1" data-ng-options="option.Name for option in options1 track by option.CateId"
+                data-ng-change="getOptions2(option1)">
+                <% listCate.forEach(function(item){ %>      
+                    <% if(item.CateId == pd.category[0]) {%> 
+                        <option value=""> <%= item.Name %> </option>
+                    <% } %>
+                <% }) %>
+            </select>
+            <select class="ui fluid selection dropdown" id="selectsub" name="loai2" ng-model="option2" ng-options="idx as option for (idx,option) in options2">
+                <% listCate.forEach(function(item){ %>      
+                    <% if(item.CateId == pd.category[0]) {%> 
+                        <option value=""> <%= item.SubCategory[pd.category[1]] %> </option>
+                    <% } %>
                 <% }) %>
             </select>
         </div>
+
+         <script>
+            var a = [], b = []
+            var app = angular.module("myApp", []);
+
+            '<% listCate.forEach(function(item, index){ %>'
+                a.push(JSON.parse('<%- JSON.stringify(listCate[index]) %>'))
+                b.push(JSON.parse('<%- JSON.stringify(listCate[index].SubCategory)%>'))
+            '<% }) %>'
+
+            var option1Options = a;
+            var option2Options = b;
+            console.log(b)
+            console.log(a)
+            app.controller("myCtrl", function ($scope) {
+                $scope.options1 = option1Options;
+                $scope.seletedop1 = option1Options[0];
+                $scope.options2 = [];
+                $scope.getOptions2 = function (item) {
+                    var key = a.findIndex(x => x.CateId == item.CateId);
+                    console.log("Key " + key)
+                    var myNewOptions = option2Options[key];
+                    $scope.options2 = myNewOptions;
+                };
+            });
+        </script>
+
+
+
+        <h4 class="ui dividing header">Quantity of each size (S-M-L-XL)</h4>
+        <div class="four wide  fields">
+            <div class="field">
+                <label>Size S</label>
+                <input type="number" name="S" min="0" max="100" step="1" value="<%= pd.sizeQty.S%>"  required>
+            </div>
+            <div class="field">
+                <label>Size M</label>
+                <input type="number" name="M" min="0" max="100" step="1" value="<%= pd.sizeQty.M%>" required>
+            </div>
+            <div class="field">
+                <label>Size L</label>
+                <input type="number" name="L" min="0" max="100" step="1" value="<%= pd.sizeQty.L%>" required>
+            </div>
+            <div class="field">
+                <label>Size XL</label>
+                <input type="number" name="XL" min="0" max="100" step="1" value="<%= pd.sizeQty.XL%>" required>
+            </div>
+        </div>
+
         <div class="field">
                 <label>Giới thiệu</label>
-                <textarea name="gioithieu" placeholder="Tên SP" ></textarea>
+                <textarea name="gioithieu" placeholder="Tên SP" ><%= pd.description%></textarea>
             </div>
         <button class="ui button" type="submit">Submit</button>
     </form>

@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var DB = require('../../common/workwDB');
+var multer = require('multer')
+var upload = multer({ dest: '/tmp/' });
 
-//DB.newConnection();
 
 /* GET home page. */
 router.get('/admin', function (req, res) {
@@ -36,20 +37,20 @@ router.get('/admin/createproduct', function (req, res) {
   })
 })
 
-router.post('/admin/createproduct/save', function (req, res) {
+router.post('/admin/createproduct/save',upload.any(), function (req, res) {
   var product = {
     tensanpham: req.body.tensanpham,
     gia: req.body.gia,
     gioithieu: req.body.gioithieu,
     category: req.body.loai,
+    hinh:req.files,
     subcategory:req.body.loai2.substr(7),
     sizeS:req.body.S,
     sizeM:req.body.M,
     sizeL:req.body.L,
     sizeXL:req.body.XL
-
   };
-  console.log(product)
+  //console.log(product)
   DB.CreateProductItem(product, function (cb) {
     if (cb) {
       res.status(400).json("Can't create product")
@@ -83,15 +84,23 @@ router.post('/admin/editproduct/save', function (req, res) {
     tensanpham: req.body.tensanpham,
     gia: req.body.gia,
     gioithieu: req.body.gioithieu,
-    loai: req.body.loai
+    category: req.body.loai,
+    subcategory:req.body.loai2.substr(7),
+    sizeS:req.body.S,
+    sizeM:req.body.M,
+    sizeL:req.body.L,
+    sizeXL:req.body.XL
   };
-  DB.UpdateProductItem(product, function (cb) {
-    if (cb) {
-      res.status(400).json("Can't update this product")
-    } else {
-      res.redirect("/admin");
-    }
-  })
+  console.log(product)
+
+      DB.UpdateProductItem(product, function (cb) {
+        if (cb) {
+          res.status(400).json("Can't update this product")
+        } else {
+          res.redirect("/admin");
+        }
+      })
+
 })
 
 router.get('/admin/product/delete/:id', function (req, res) {
