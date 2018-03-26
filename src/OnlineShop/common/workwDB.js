@@ -11,15 +11,17 @@ cloudinary.config({
     api_key: '567396442693771', 
     api_secret: 'uc4-GwpeMXreP1_dH1CUQKUIKcs' 
   });
-
 MongoClient.connect(url, {
+    
     auth: {
         user: 'binhm63',
         password: 'BlackBerry8310+',
     }
 }, (err, client) => {
+    
     if (err) return console.log(err)
     db = client.db('onlineshop')
+    console.log("Conneted to DB")
 })
 
 exports.GetProductperPage = function (pagesize, pagenumber, callback) {

@@ -9,15 +9,15 @@ var DB = require('../common/workwDB');
 
 
 router.get('/', function (req, res) {
-            DB.GetAllProduct(function (cb, listproduct) {
-                if (cb) {
-                    res.status(400).json("Can't get Product")
-                } else {
-                    res.render("index", { products: listproduct, hello: req.user })
-                }
-            })
+    DB.GetAllProduct(function (cb, listproduct) {
+        if (cb) {
+            res.status(400).json("Can't get Product")
+        } else {
+            res.render("index", { products: listproduct, hello: req.user })
+        }
+    })
 
-        })
+})
 router.get('/detail/:id', function (req, res) {
     var id = req.params.id;
     DB.GetOneProduct(id, function (cb, data) {
