@@ -243,10 +243,6 @@ function CheckCategoryExist(id, callback) {
 }
 
 exports.CreateProductItem = function (product, callback) {
-    // var id = uuid.v4() + randomstring.generate({
-    //     length: 128,
-    //     charset: 'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM_.-'
-    // })
     CheckCategoryExist(product.category, async function (cb) {
         if (cb) {
             console.error("Doesn't exist this category")
@@ -311,4 +307,9 @@ exports.DeleteProduct = function (ma, callback) {
     })
 
 }
+
+    // var id = uuid.v4() + randomstring.generate({
+    //     length: 128,
+    //     charset: 'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM_.-'
+    // })
 
