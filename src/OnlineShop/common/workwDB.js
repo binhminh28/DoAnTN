@@ -3,7 +3,7 @@ var randomstring = require("randomstring");
 var ObjectId = require('mongodb').ObjectID
 var cloudinary = require('cloudinary')
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://cluster0-shard-00-00-z89mh.mongodb.net:27017/?ssl=true";
+var url = "mongodb://cluster0-shard-00-00-z89mh.mongodb.net:27017/?ssl=true&readPreference=secondary";
 var db
 
 cloudinary.config({ 
@@ -12,13 +12,11 @@ cloudinary.config({
     api_secret: 'uc4-GwpeMXreP1_dH1CUQKUIKcs' 
   });
 MongoClient.connect(url, {
-    
     auth: {
         user: 'binhm63',
         password: 'BlackBerry8310+',
     }
 }, (err, client) => {
-    
     if (err) return console.log(err)
     db = client.db('onlineshop')
     console.log("Conneted to DB")

@@ -46,5 +46,4 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 app.listen(8081, function () {
     console.log("Server is listening on port 8081");
     console.log("Wait for database connection...")
-    
 });

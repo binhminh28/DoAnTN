@@ -93,7 +93,7 @@
                                     </form>
                                 </li>
                                 <li class="option-cart">
-                                    <a href="#" class="cart-icon">cart
+                                    <a href="/cart" class="cart-icon">cart
                                         <span class="cart_no" id="select"></span>
                                     </a>
                                     <ul class="option-cart-item" >
@@ -101,10 +101,10 @@
                                         <li ng-repeat="x in products">
                                             <div class="cart-item">
                                                 <div class="image">
-                                                    <img src="#" alt="">
+                                                    <img src="{{x.image}}" alt="">
                                                 </div>
                                                 <div class="item-description">
-                                                    <p class="name">{{x._id}}</p>
+                                                    <p class="name">{{x.name}}</p>
                                                     <p>
                                                         <!-- <span class="light-red">One size</span> -->
                                                         <br>Quantity:
@@ -121,9 +121,9 @@
                                         </li>
                                         <li >
                                             <span class="total" >Total
-                                                <strong id="price"></strong>
+                                                <strong id="price">${{ getTotal() }}</strong>
                                             </span>
-                                            <button class="checkout" onClick="location.href='checkout.html'">CheckOut</button>
+                                            <button class="checkout" onClick="location.href='/cart'">CheckOut</button>
                                         </li>
                                     </ul>
                                 </li>
@@ -366,7 +366,15 @@
                                                 <%= pd.price%>
                                             </h4>
                                             <div class="button_group">
-                                                <button class="button add-cart" data="<%=pd._id %>" type="button" ng-click="addItem($event)">Add To Cart</button>
+                                                <button class="button add-cart" 
+                                                    data="<%=pd._id %>" 
+                                                    money="<%=pd.price%>" 
+                                                    name="<%= pd.productName%>"
+                                                    image="images/products/small/products-03.png" 
+                                                    type="button" 
+                                                    ng-click="addItem($event)">
+                                                        Add To Cart
+                                                </button>
                                                 <button class="button compare" type="button">
                                                     <i class="fa fa-exchange"></i>
                                                 </button>
@@ -655,56 +663,8 @@
     <script type="text/javascript" src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
     <script defer src="js/jquery.flexslider.js"></script>
     
-    <script>
-        var app = angular.module("myShoppingList", []); 
-        app.controller("myCtrl", function($scope) {
-            $scope.products = []
-            if ($.session.get('giohang') != undefined) {
-                $("#select").html(JSON.parse($.session.get('giohang')).length);
-                $scope.products = JSON.parse($.session.get('giohang'));
-            }
-            $scope.addItem = function (item) {
-                var idproduct = item.target.attributes.data.value;
-                var giohang = [];
-                if ($.session.get('giohang') === undefined) {
-                    var item = {
-                        _id: idproduct,
-                        sl: 1
-                    }
-                    giohang.push(item);
-                    $scope.products.push(item);
-                    $.session.set('giohang', JSON.stringify(giohang));
-                    $("#select").html(JSON.parse($.session.get('giohang')).length);
-                    console.log("Them moi session")
-                }
-                else {
-                    giohang = JSON.parse($.session.get('giohang'));
-                    for (var i = 0; i < giohang.length; i++) {
-                        console.log("Dang có: " + giohang.length)
-                        if (giohang[i]._id === idproduct) {
-                            giohang[i].sl++;
-                            $scope.products[i].sl++;
-                            $.session.set('giohang', JSON.stringify(giohang));
-                            return;
-                        }
-                    }
-                    var item = {
-                        _id: idproduct,
-                        sl: 1
-                    }
-                    giohang.push(item);
-                    $scope.products.push(item);
-                    $.session.set('giohang', JSON.stringify(giohang));
-                    $("#select").html(JSON.parse($.session.get('giohang')).length);
-                }
-            }
-            $scope.removeItem = function (x) {
-                $scope.errortext = "";    
-                $scope.products.splice(x, 1);
-                $.session.set('giohang', JSON.stringify($scope.products));
-                $("#select").html(JSON.parse($.session.get('giohang')).length);
-            }
-        });
+    <script src="js/script.js">
+        
     </script>
 </body>
 </html>

@@ -34,4 +34,8 @@ router.get('/detail/:id', function (req, res) {
         }
     })
 })
+
+router.get('/cart', function(req, res){
+    res.render('checkout');
+})
 module.exports = router;
