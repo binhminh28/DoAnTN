@@ -3,7 +3,7 @@ var randomstring = require("randomstring");
 var ObjectId = require('mongodb').ObjectID
 var cloudinary = require('cloudinary')
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://cluster0-shard-00-00-z89mh.mongodb.net:27017/?ssl=true&readPreference=secondary";
+var url = "mongodb://cluster0-shard-00-00-z89mh.mongodb.net:27017/?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin";
 var db
 
 cloudinary.config({ 

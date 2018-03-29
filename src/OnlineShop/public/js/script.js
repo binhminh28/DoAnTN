@@ -3,9 +3,9 @@
 var app = angular.module("myShoppingList", []);
 app.controller("myCtrl", function ($scope) {
     $scope.products = []
-    if ($.session.get('giohang') != undefined) {
-        $("#select").html(JSON.parse($.session.get('giohang')).length);
-        $scope.products = JSON.parse($.session.get('giohang'));
+    if (localStorage.getItem('giohang') != null) {
+        $scope.Quantity = JSON.parse(localStorage.getItem('giohang')).length
+        $scope.products = JSON.parse(localStorage.getItem('giohang'));
     }
     $scope.addItem = function (item) {
         var idproduct = item.target.attributes.data.value;
@@ -18,18 +18,17 @@ app.controller("myCtrl", function ($scope) {
             image:item.target.attributes.image.value
         }
 
-        if ($.session.get('giohang') === undefined) {
-            
+        if (localStorage.getItem('giohang') === null) {
             giohang.push(item);
             $scope.products.push(item);
-            $.session.set('giohang', JSON.stringify(giohang));
-            $("#select").html(JSON.parse($.session.get('giohang')).length);
+            localStorage.setItem('giohang', JSON.stringify(giohang));
+            $scope.Quantity = JSON.parse(localStorage.getItem('giohang')).length
             console.log("Them moi session")
         }
         else {
-            giohang = JSON.parse($.session.get('giohang'));
+            giohang = JSON.parse(localStorage.getItem('giohang'));
             for (var i = 0; i < giohang.length; i++) {
-                console.log("Dang có: " + giohang.length)
+                //console.log("Dang có: " + giohang.length)
                 if (giohang[i]._id === idproduct) {
                     if(giohang[i].sl >=5){
                         alert("Shit! You buy too much. Quantity must be less than 5")
@@ -37,22 +36,22 @@ app.controller("myCtrl", function ($scope) {
                     }else{
                         giohang[i].sl++;
                         $scope.products[i].sl++;
-                        $.session.set('giohang', JSON.stringify(giohang));
+                        localStorage.setItem('giohang', JSON.stringify(giohang));
                         return;
                     }
                 }
             }
             giohang.push(item);
             $scope.products.push(item);
-            $.session.set('giohang', JSON.stringify(giohang));
-            $("#select").html(JSON.parse($.session.get('giohang')).length);
+            localStorage.setItem('giohang', JSON.stringify(giohang));
+            $scope.Quantity = JSON.parse(localStorage.getItem('giohang')).length
         }
     }
     $scope.removeItem = function (x) {
         $scope.errortext = "";
         $scope.products.splice(x, 1);
-        $.session.set('giohang', JSON.stringify($scope.products));
-        $("#select").html(JSON.parse($.session.get('giohang')).length);
+        localStorage.setItem('giohang', JSON.stringify($scope.products));
+        $scope.Quantity = JSON.parse(localStorage.getItem('giohang')).length
     }
     $scope.getTotal = function () {
         var total = 0;

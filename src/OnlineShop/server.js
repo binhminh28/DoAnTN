@@ -13,7 +13,7 @@ var app = express();
 var validatorOption ={};
 
 app.use(expressValidator(validatorOption));
-app.use(session({secret: 'mysecret'}))
+app.use(session({secret: 'mysecret',resave: true,saveUninitialized: true}))
 app.use(flash());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(passport.initialize());
@@ -44,6 +44,5 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 
 
 app.listen(8081, function () {
-    console.log("Server is listening on port 8081");
-    console.log("Wait for database connection...")
+    console.log("Server is listening on port 8081\nWaiting for database connection...");
 });
