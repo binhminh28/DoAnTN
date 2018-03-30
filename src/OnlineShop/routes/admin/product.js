@@ -6,7 +6,7 @@ var upload = multer({ dest: '/tmp/' });
 
 
 /* GET home page. */
-router.get('/admin', function (req, res) {
+router.get('/admin',isAuthenticated, function (req, res) {
 
   var currentPage = 1,
       pageSize = 4
