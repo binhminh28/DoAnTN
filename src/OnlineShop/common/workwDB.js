@@ -3,7 +3,7 @@ var randomstring = require("randomstring");
 var ObjectId = require('mongodb').ObjectID
 var cloudinary = require('cloudinary')
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://cluster0-shard-00-00-z89mh.mongodb.net:27017/?ssl=true";
+var url = "mongodb://cluster0-shard-00-00-z89mh.mongodb.net:27017/?ssl=true&readPreference=secondary";
 var db
 
 cloudinary.config({ 
@@ -137,7 +137,8 @@ exports.GetAllCategory = function (callback) {
 
 
 exports.GetAllProduct = function (callback) {
-    var cursor = db.collection('Product').find().toArray(function (err, data) {
+
+    var cursor = db.collection('Product').find({  }).toArray(function (err, data) {
         if (err) {
             console.log("Error Json", JSON.stringify(err, null, 2));
         } else {
@@ -312,4 +313,166 @@ exports.DeleteProduct = function (ma, callback) {
     //     length: 128,
     //     charset: 'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM_.-'
     // })
+
+exports.GetAllProductID = function (callback) {
+
+
+    var cursor = db.collection('Product').find().limit(1).skip(Math.floor(Math.random()*N)).toArray(function (err, data) {
+        if (err) {
+            console.log("Error Json", JSON.stringify(err, null, 2));
+        } else {
+            if (data.length > 0)
+                callback(false, data)
+            else
+                callback(true)
+        }
+    })
+}
+exports.GetProductperPageWomen = function (pagesize, pagenumber, callback) {
+    var query={ "category.0": "L01"};
+
+    var cursor = db.collection('Product').find(query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+exports.GetProductperPageMen = function (pagesize, pagenumber, callback) {
+    var query={ "category.0": "L02"};
+    var cursor = db.collection('Product').find(query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+
+exports.GetProductperPageAoNu = function (pagesize, pagenumber, callback) {
+    var query={ "category.0":"L01","category.1": 0};
+
+    var cursor = db.collection('Product').find(query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+
+exports.GetProductperPageDam = function (pagesize, pagenumber, callback) {
+    var query={ "category.1": 1};
+
+    var cursor = db.collection('Product').find(query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+exports.GetProductperPageChanVay = function (pagesize, pagenumber, callback) {
+    var query={ "category.0":"L01","category.1": 2};
+
+    var cursor = db.collection('Product').find(query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+exports.GetProductperPageAoNam = function (pagesize, pagenumber, callback) {
+    var query={  "category.0":"L02", "category.1": 0};
+
+    var cursor = db.collection('Product').find(query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+exports.GetProductperPageAoSomi = function (pagesize, pagenumber, callback) {
+    var query={  "category.0":"L02","category.1": 1};
+
+    var cursor = db.collection('Product').find(query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+
+
+
+
+
+
 

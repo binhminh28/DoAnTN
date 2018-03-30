@@ -8,7 +8,14 @@ var index = require('./routes/index')
 var user = require('./routes/users')
 var admin = require('./routes/admin/product')
 var detail = require('./routes/detail')
-
+var all = require('./routes/allproduct')
+var women = require('./routes/women')
+var men = require('./routes/men')
+var aonu = require('./routes/aonu')
+var dam = require('./routes/dam')
+var chanvay = require('./routes/chanvay')
+var aonam = require('./routes/aonam')
+var aosomi = require('./routes/aosomi')
 var app = express();
 var validatorOption ={};
 
@@ -30,6 +37,15 @@ app.use('/', index)
 app.use('/',user);
 app.use('/',admin);
 app.use('/detail',detail);
+app.use('/all',all);
+app.use('/women',women);
+app.use('/men',men);
+app.use('/women/dam',dam);
+app.use('/women/chanvay',chanvay);
+app.use('/women/aonu',aonu);
+app.use('/men/aonam',aonam);
+app.use('/men/aosomi',aosomi);
+
 
 /* Local Strategy */
 app.post('/loginlc',passport.authenticate('local',{
