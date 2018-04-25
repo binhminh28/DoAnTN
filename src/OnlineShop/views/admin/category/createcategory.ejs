@@ -1,0 +1,59 @@
+<% layout('../../layoutAdmin') %>
+
+
+<form class="ui form" action="/admin/createproduct/save" method="POST" ng-app="myApp" enctype='multipart/form-data'>
+    <h2 class="ui dividing header">Create Category</h2>
+
+    <div class="ui error message"></div>
+    <div class="field">
+        <label>Category ID</label>
+        <input type="text" name="tensanpham" placeholder="Category ID">
+    </div>
+    <div class="field">
+        <label>Category Name</label>
+        <input type="text" name="masanpham" placeholder="Category Name">
+    </div>
+    <div class="field">
+        <label>Component</label>
+        <input type="text" name="tensanpham" placeholder="Category name 1">
+        <input type="text" name="tensanpham" placeholder="Category name 2">
+        <input type="text" name="tensanpham" placeholder="Category name 3">
+        <input type="text" name="tensanpham" placeholder="Category name 4">
+    </div>
+
+
+
+    <!--<script>-->
+        <!--var a = [], b = []-->
+        <!--var app = angular.module("myApp", []);-->
+
+        <!--'<% listCate.forEach(function(item, index){ %>'-->
+        <!--a.push(JSON.parse('<%- JSON.stringify(listCate[index]) %>'))-->
+        <!--b.push(JSON.parse('<%- JSON.stringify(listCate[index].SubCategory)%>'))-->
+        <!--'<% }) %>'-->
+
+        <!--var option1Options = a;-->
+        <!--var option2Options = b;-->
+        <!--console.log(b)-->
+        <!--console.log(a)-->
+        <!--app.controller("myCtrl", function ($scope) {-->
+            <!--$scope.options1 = option1Options;-->
+            <!--$scope.options2 = [];-->
+            <!--$scope.getOptions2 = function (item) {-->
+                <!--var key = a.findIndex(x => x.CateId == item.CateId);-->
+                <!--console.log("Key " + key)-->
+                <!--var myNewOptions = option2Options[key];-->
+                <!--$scope.options2 = myNewOptions;-->
+            <!--};-->
+        <!--});-->
+        <!--app.controller("SizeCtrl", function ($scope) {-->
+            <!--$scope.sizeS  = {value: 0};-->
+            <!--$scope.sizeM  = {value: 0};-->
+            <!--$scope.sizeL  = {value: 0};-->
+            <!--$scope.sizeXL = {value: 0};-->
+        <!--});-->
+    <!--</script>-->
+
+
+    <button class="ui button" type="submit">Submit</button>
+</form>

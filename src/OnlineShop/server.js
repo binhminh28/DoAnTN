@@ -7,16 +7,11 @@ var flash = require('connect-flash');
 var index = require('./routes/index')
 var user = require('./routes/users')
 var admin = require('./routes/admin/product')
+var admin1= require('./routes/admin/category')
+
+// var category = require('./routes/admin/category')
 var detail = require('./routes/detail')
-var all = require('./routes/allproduct')
-var women = require('./routes/women')
-var men = require('./routes/men')
-var aonu = require('./routes/aonu')
-var dam = require('./routes/dam')
-var chanvay = require('./routes/chanvay')
-var aonam = require('./routes/aonam')
-var aosomi = require('./routes/aosomi')
-var app = express();
+var app = express()
 var validatorOption ={};
 
 app.use(expressValidator(validatorOption));
@@ -26,25 +21,28 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.engine('ejs', require('ejs-locals'));
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
 
 app.use(express.static('public'))
+
 app.use('/', index)
 app.use('/',user);
 app.use('/',admin);
+app.use('/',admin1);
+
+
 app.use('/detail',detail);
-app.use('/all',all);
+/*app.use('/all',all);
 app.use('/women',women);
 app.use('/men',men);
 app.use('/women/dam',dam);
 app.use('/women/chanvay',chanvay);
 app.use('/women/aonu',aonu);
 app.use('/men/aonam',aonam);
-app.use('/men/aosomi',aosomi);
+app.use('/men/aosomi',aosomi);*/
 
 
 /* Local Strategy */

@@ -13,6 +13,7 @@ router.get('/admin',isAuthenticated, function (req, res) {
   if (typeof req.query.page !== 'undefined') {
     currentPage = +req.query.page;
   }
+
   DB.GetProductperPage(pageSize, currentPage, function (err, data, total) {
     if (err) {
       res.status(400).json("produc not found")
