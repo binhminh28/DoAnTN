@@ -8,6 +8,7 @@ var index = require('./routes/index')
 var user = require('./routes/users')
 var admin = require('./routes/admin/product')
 var admin1= require('./routes/admin/category')
+var list = require('./routes/list/list')
 
 // var category = require('./routes/admin/category')
 var detail = require('./routes/detail')
@@ -32,7 +33,7 @@ app.use('/', index)
 app.use('/',user);
 app.use('/',admin);
 app.use('/',admin1);
-
+app.use('/',list);
 
 app.use('/detail',detail);
 /*app.use('/all',all);

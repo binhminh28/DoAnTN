@@ -78,7 +78,7 @@ router.get('/admin/product/edit/:id', function (req, res) {
     }
   })
 })
-
+//hàm m mới làm đâu
 router.post('/admin/editproduct/save', function (req, res) {
   var product = {
     masanpham: req.body.masanpham,

@@ -4,7 +4,7 @@ var DB = require('../../common/workwDB');
 
 
 /* GET home page. */
-router.get('/category',isAuthenticated,function (req, res) {
+router.get('/category',function (req, res) {
     var currentPage = 1,
         pageSize = 4
     if (typeof req.query.page !== 'undefined') {
@@ -26,24 +26,24 @@ router.get('/category',isAuthenticated,function (req, res) {
 });
 
 router.get('/admin/createcategory', function (req, res) {
-    DB.GetAllCategory(function (cb, data) {
-        if (cb) {
-            res.status(400).json("Can't get category");
-        } else {
-            res.render("./admin/category/createcategory", { listCate: data });
-        }
-    })
-})
 
+    // DB.GetAllCategory(function (cb, data) {
+    //     if (cb) {
+    //         res.status(400).json("Can't get category");
+    //     } else {
+            res.render("./admin/category/createcategory");
+    //     }
+    // })
+})
+//nó chạy vô hafmg đ nào z cố vô hàm dưới đâu
 router.post('/admin/createcategory/save', function (req, res) {
+
     var product = {
         maid: req.body.maid,
         ten: req.body.ten,
-        // so0:req.body.[0],
-        // so1:req.body.[1],
-        // so2:req.body.[2]
+        subCategory:req.body.subCategory
     };
-    //console.log(product)
+    console.log(product)
     DB.CreateCategoryItem(product, function (cb) {
         if (cb) {
             res.status(400).json("Can't create product")
@@ -64,11 +64,11 @@ router.get('/admin/category/edit/:id', function (req, res) {
             //     if (cb) {
             //         res.status(400).json("Can't get Category")
             //     } else {
-                    res.render("./admin/category/editcategory", { products: data})
-                }
-            })
-        // }
+            res.render("./admin/category/editcategory", { products: data})
+        }
     })
+    // }
+})
 // })
 
 
@@ -82,7 +82,7 @@ router.post('/admin/editcategory/save', function (req, res) {
 
 
     };
-    console.log(product)
+    // console.log(product)
 
     DB.UpdateCategoryItem(product, function (cb) {
         if (cb) {

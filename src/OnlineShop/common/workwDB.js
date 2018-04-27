@@ -306,6 +306,102 @@ exports.DeleteProduct = function (ma, callback) {
     })
 
 }
+//list
+exports.GetProductperPageNu0 = function (pagesize, pagenumber, callback) {
+    var query={ "category.0":"L01","category.1": 0};
+    var cursor = db.collection('Product').find( query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+exports.GetProductperPageNu1 = function (pagesize, pagenumber, callback) {
+    var query={ "category.0":"L01","category.1": 1};
+    var cursor = db.collection('Product').find( query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+exports.GetProductperPageNu2 = function (pagesize, pagenumber, callback) {
+    var query={ "category.0":"L01","category.1": 2};
+    var cursor = db.collection('Product').find( query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+exports.GetProductperPageNam0 = function (pagesize, pagenumber, callback) {
+    var query={ "category.0":"L02","category.1": 0};
+    var cursor = db.collection('Product').find( query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
+exports.GetProductperPageNam1 = function (pagesize, pagenumber, callback) {
+    var query={ "category.0":"L02","category.1": 1};
+    var cursor = db.collection('Product').find( query).limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
+        if (err) {
+            console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            if (data.length > 0) {
+                db.collection('Product').count(function(err,total){
+                    if(!err){
+                        callback(false,data, total)
+                    }
+                })
+            } else {
+                callback(true)
+            }
+        }
+    })
+}
 //category
 exports.GetProductperPageCategory = function (pagesize, pagenumber, callback) {
     var cursor = db.collection('Category').find().limit(pagesize).skip(pagesize * (pagenumber - 1)).toArray(function (err, data) {
@@ -387,24 +483,17 @@ exports.GetProductperPageCategory = function (pagesize, pagenumber, callback) {
         })
     }
     exports.CreateCategoryItem = function (product, callback) {
-        CheckCategoryExist(product.category, async, function (cb) {
+        CheckCategoryExist(product.category, function (cb) {
             if (cb) {
                 console.error("Doesn't exist this category")
                 callback(true)
             } else
                 var params = {
                     CateId: product.maid,
-
                     Name: product.ten,
-                    subCategory:{
-                        0:product.so0,
-                        1:product.so1,
-                        2:product.so2,
-
-                    }
-
+                    subCategory:product.subCategory
                 };
-                //console.log(params)
+                console.log(params)
                 var cursor = db.collection('Category').insertOne(params, function (err, data) {
                     if (err) {
                         console.error("Error JSON:", JSON.stringify(err, null, 2));
