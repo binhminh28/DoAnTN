@@ -41,7 +41,7 @@ router.post('/admin/createcategory/save', function (req, res) {
     var product = {
         maid: req.body.maid,
         ten: req.body.ten,
-        subCategory:req.body.subCategory
+        subcategory:req.body.subcategory
     };
     console.log(product)
     DB.CreateCategoryItem(product, function (cb) {
@@ -60,16 +60,17 @@ router.get('/admin/category/edit/:id', function (req, res) {
         if (cb) {
             res.status(400).json('product not found');
         } else {
-            // DB.GetAllCategory(function (cb, listCate) {
-            //     if (cb) {
-            //         res.status(400).json("Can't get Category")
-            //     } else {
-            res.render("./admin/category/editcategory", { products: data})
+            DB.GetAllCategory(function (cb, listCate) {
+                if (cb) {
+                    res.status(400).json("Can't get Category")
+                } else {
+            res.render("./admin/category/editcategory", { products: data,listCate: listCate })
         }
     })
-    // }
+    }
 })
-// })
+
+})
 
 
 router.post('/admin/editcategory/save', function (req, res) {
@@ -77,12 +78,11 @@ router.post('/admin/editcategory/save', function (req, res) {
         masanpham: req.body.masanpham,
         idloai: req.body.idloai,
         tenloai: req.body.tenloai,
-        // category: req.body.loai,
         subCategory:req.body.subCategory,
 
 
     };
-    // console.log(product)
+    console.log(product)
 
     DB.UpdateCategoryItem(product, function (cb) {
         if (cb) {

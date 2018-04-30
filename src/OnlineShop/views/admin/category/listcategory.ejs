@@ -49,9 +49,8 @@
                     <%= pd.Name%>
                 </td>
                 <td>
-                    <%= pd.SubCategory[0]%>||
-                    <%= pd.SubCategory[1]%>||
-                    <%= pd.SubCategory[2]%>||
+                    <%= pd.SubCategory%>
+
                 </td>
                 <td>
                     <p style="color: #4800ff">
@@ -67,7 +66,7 @@
         <% if (pageCount > 1) { %>
         <ul class="pagination">
             <% if (currentPage > 1) { %>
-            <li><a href="/admin/?page=1">&laquo;</a></li>
+            <li><a href="/category/?page=1">&laquo;</a></li>
             <% } %>
             <% var i = 1;
                 if (currentPage > 5) {
@@ -80,14 +79,14 @@
             <% if (currentPage == i) { %>
             <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span></li>
             <% } else { %>
-            <li><a href="/admin/?page=<%= i %>"><%= i %></a></li>
+            <li><a href="/category/?page=<%= i %>"><%= i %></a></li>
             <% } %>
             <% if (i == (+currentPage + 4)) { %>
             <li class="disabled"><a href="#">...</a></li>
             <% break; } %>
             <% } %>
             <% if (currentPage != pageCount) { %>
-            <li><a href="/admin/?page=<%= pageCount %>">&raquo;</a></li>
+            <li><a href="/category/?page=<%= pageCount %>">&raquo;</a></li>
             <% } %>
         </ul>
         <% } %>

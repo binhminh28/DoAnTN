@@ -1,28 +1,30 @@
 <% layout('../../layoutAdmin') %>
 
 <% products.forEach(function (pd) { %>
-<form class="ui form" action="/admin/editproduct/save" method="POST" ng-app="myApp">
-    <h2 class="ui dividing header">Update Product</h2>
+<form class="ui form" action="/admin/editcategory/save" method="POST" ng-app="myApp">
+    <h2 class="ui dividing header">Update Category</h2>
     <div class="ui error message"></div>
     <div class="field">
         <label>ID</label>
-        <input readonly type="text" name="masanpham" placeholder="Mã SP" value="<%= pd._id %>">
+        <input readonly type="text" name="masanpham" placeholder="Mã Category ID" value="<%= pd._id %>">
     </div>
     <div class="field">
-        <label>Cate ID</label>
-        <input type="text" name="tencateid" placeholder="Mã Category" value="<%= pd.CateId %>">
+        <label>Category ID</label>
+        <input type="text" name="idloai" placeholder="Category ID" value="<%= pd.CateId %>">
     </div>
     <div class="field">
-        <label>Cate ID</label>
-        <input type="text" name="tencate" placeholder="Tên Category" value="<%= pd.Name %>">
+        <label>Category Name</label>
+        <input type="text" name="tenloai" placeholder="Category Name" value="<%= pd.Name%>">
     </div>
-    <!--<div  ng-controller="myCtrl" class="field">-->
-        <!--<select class="ui fluid selection dropdown" id="selectsub" name="loai2" ng-model="option2" ng-options="idx as option for (idx,option) in options2">-->
-            <!--<option value=""><%= pd.subCategory %> </option>-->
+    <div class="field">
+        <label>Component</label>
+        <input type="text" name="subCategory" placeholder="Category name 1, Category name2,...">
+    </div>
 
 
-        <!--</select>-->
-    <!--</div>-->
+
+
+
 
 
 

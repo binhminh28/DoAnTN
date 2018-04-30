@@ -483,17 +483,12 @@ exports.GetProductperPageCategory = function (pagesize, pagenumber, callback) {
         })
     }
     exports.CreateCategoryItem = function (product, callback) {
-        CheckCategoryExist(product.category, function (cb) {
-            if (cb) {
-                console.error("Doesn't exist this category")
-                callback(true)
-            } else
                 var params = {
                     CateId: product.maid,
                     Name: product.ten,
-                    subCategory:product.subCategory
+                    subCategory:product.subcategory
                 };
-                console.log(params)
+                // console.log(params)
                 var cursor = db.collection('Category').insertOne(params, function (err, data) {
                     if (err) {
                         console.error("Error JSON:", JSON.stringify(err, null, 2));
@@ -503,7 +498,7 @@ exports.GetProductperPageCategory = function (pagesize, pagenumber, callback) {
                         callback(false);
                     }
                 })
-        })
+
     }
 
 }
