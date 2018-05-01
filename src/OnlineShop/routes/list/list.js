@@ -35,7 +35,7 @@ router.get('/list/thoitrangnu/damnu', function (req, res) {
         if (err) {
             res.status(400).json("produc not found")
         } else {
-            res.render("list", { products: data, hello: req.user,
+            res.render("./list/list", { products: data, hello: req.user,
                 pageSize: pageSize,
                 pageCount: Math.ceil(total / pageSize),
                 currentPage: currentPage,
@@ -55,7 +55,7 @@ router.get('/list/thoitrangnu/chanvaynu', function (req, res) {
         if (err) {
             res.status(400).json("produc not found")
         } else {
-            res.render("list", { products: data, hello: req.user,
+            res.render("./list/list", { products: data, hello: req.user,
                 pageSize: pageSize,
                 pageCount: Math.ceil(total / pageSize),
                 currentPage: currentPage,
@@ -75,7 +75,7 @@ router.get('/list/thoitrangnam/aothunnam', function (req, res) {
         if (err) {
             res.status(400).json("produc not found")
         } else {
-            res.render("list", { products: data, hello: req.user,
+            res.render("./list/list", { products: data, hello: req.user,
                 pageSize: pageSize,
                 pageCount: Math.ceil(total / pageSize),
                 currentPage: currentPage,
@@ -95,7 +95,7 @@ router.get('/list/thoitrangnam/aosominam', function (req, res) {
         if (err) {
             res.status(400).json("produc not found")
         } else {
-            res.render("list", { products: data, hello: req.user,
+            res.render("./list/list", { products: data, hello: req.user,
                 pageSize: pageSize,
                 pageCount: Math.ceil(total / pageSize),
                 currentPage: currentPage,

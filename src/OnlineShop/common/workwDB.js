@@ -101,7 +101,7 @@ exports.FindOne = function (username, callback) {
         }
     })
 }
-
+// ak coi dùm t cai nay lun 
 exports.Register = function (id, email, name, gender, callback) {
     var newUser = {
         usename: id,
@@ -433,7 +433,7 @@ exports.GetProductperPageCategory = function (pagesize, pagenumber, callback) {
                         $set:{
                             CateId: product.idloai,
                             Name: product.tenloai,
-                            subCategory:  product.subcategory,
+                            subCategory:  product.subCategory,
                         }
                     }
                     console.log("Updating the item...");
@@ -486,9 +486,10 @@ exports.GetProductperPageCategory = function (pagesize, pagenumber, callback) {
                 var params = {
                     CateId: product.maid,
                     Name: product.ten,
-                    subCategory:product.subcategory
+                    SubCategory:product.subcategory
                 };
-                // console.log(params)
+                console.log("2 => ")
+                console.log(params)
                 var cursor = db.collection('Category').insertOne(params, function (err, data) {
                     if (err) {
                         console.error("Error JSON:", JSON.stringify(err, null, 2));

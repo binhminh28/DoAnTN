@@ -41,9 +41,8 @@ router.post('/admin/createcategory/save', function (req, res) {
     var product = {
         maid: req.body.maid,
         ten: req.body.ten,
-        subcategory:req.body.subcategory
+        subcategory:req.body.subCategory
     };
-    console.log(product)
     DB.CreateCategoryItem(product, function (cb) {
         if (cb) {
             res.status(400).json("Can't create product")
@@ -54,6 +53,7 @@ router.post('/admin/createcategory/save', function (req, res) {
     })
 })
 
+//chờ tí ok
 router.get('/admin/category/edit/:id', function (req, res) {
     var id = req.params.id;
     DB.GetOneCatetory(id, function (cb, data) {
@@ -64,12 +64,11 @@ router.get('/admin/category/edit/:id', function (req, res) {
                 if (cb) {
                     res.status(400).json("Can't get Category")
                 } else {
-            res.render("./admin/category/editcategory", { products: data,listCate: listCate })
+                    res.render("./admin/category/editcategory", { products: data,listCate: listCate })
+                }
+            })
         }
     })
-    }
-})
-
 })
 
 

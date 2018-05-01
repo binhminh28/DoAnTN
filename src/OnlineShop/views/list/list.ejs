@@ -13,15 +13,17 @@
     <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen"/>
     <link href="/css/style.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 </head>
 <body>
-<div class="wrapper">
+<div class="wrapper" ng-app="myShoppingList" ng-controller="myCtrl">
     <div class="header">
         <div class="container">
             <div class="row">
                 <div class="col-md-2 col-sm-2">
                     <div class="logo">
-                        <a href="index.html"><img src="/images/Logo_IUH.png" alt="iuh">
+                        <a href="index.html"><img src="/images/Logo_IUH.png" alt="iuh"></a>
                     </div>
                 </div>
                 <div class="col-md-10 col-sm-10">
@@ -118,7 +120,7 @@
                                             <div class="right">
                                                 <!-- <p class="price" >$30.00</p> -->
                                                 <a ng-click="removeItem($index)" class="remove">
-                                                    <img src="images/remove.png" alt="remove">
+                                                    <img src="/images/remove.png" alt="remove">
                                                 </a>
                                             </div>
                                         </div>
@@ -1158,65 +1160,6 @@
     <script type="text/javascript" src="/js/jquery.sequence-min.js"></script>
     <script type="text/javascript" src="/js/jquery.carouFredSel-6.2.1-packed.js"></script>
     <script defer src="/js/jquery.flexslider.js"></script>
-    <script>
-        $('#select').dropdown();
-        $('#selectsub').dropdown();
-        $('#pageSize').dropdown();
-
-        $('#pageSize').on('change',function(){
-            var value = $(this).val()
-            $.cookie('ChooseSize',value);
-            console.log($.cookie('ChooseSize'))
-        })
-        var app = angular.module("myShoppingList", []);
-        app.controller("myCtrl", function($scope) {
-            $scope.products = []
-            if ($.session.get('giohang') != undefined) {
-                $("#select").html(JSON.parse($.session.get('giohang')).length);
-                $scope.products = JSON.parse($.session.get('giohang'));
-            }
-            $scope.addItem = function (item) {
-                var idproduct = item.target.attributes.data.value;
-                var giohang = [];
-                if ($.session.get('giohang') === undefined) {
-                    var item = {
-                        _id: idproduct,
-                        sl: 1
-                    }
-                    giohang.push(item);
-                    $scope.products.push(item);
-                    $.session.set('giohang', JSON.stringify(giohang));
-                    $("#select").html(JSON.parse($.session.get('giohang')).length);
-                    console.log("Them moi session")
-                }
-                else {
-                    giohang = JSON.parse($.session.get('giohang'));
-                    for (var i = 0; i < giohang.length; i++) {
-                        console.log("Dang có: " + giohang.length)
-                        if (giohang[i]._id === idproduct) {
-                            giohang[i].sl++;
-                            $scope.products[i].sl++;
-                            $.session.set('giohang', JSON.stringify(giohang));
-                            return;
-                        }
-                    }
-                    var item = {
-                        _id: idproduct,
-                        sl: 1
-                    }
-                    giohang.push(item);
-                    $scope.products.push(item);
-                    $.session.set('giohang', JSON.stringify(giohang));
-                    $("#select").html(JSON.parse($.session.get('giohang')).length);
-                }
-            }
-            $scope.removeItem = function (x) {
-                $scope.errortext = "";
-                $scope.products.splice(x, 1);
-                $.session.set('giohang', JSON.stringify($scope.products));
-                $("#select").html(JSON.parse($.session.get('giohang')).length);
-            }
-        });
-    </script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
