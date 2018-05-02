@@ -7,17 +7,12 @@ var flash = require('connect-flash');
 var index = require('./routes/index')
 var user = require('./routes/users')
 var admin = require('./routes/admin/product')
-<<<<<<< HEAD
-
-var app = express();
-=======
 var admin1= require('./routes/admin/category')
 var list = require('./routes/list/list')
 var registration = require('./routes/registration')
 // var category = require('./routes/admin/category')
 var detail = require('./routes/detail')
 var app = express()
->>>>>>> 8fb49390cf05bc37d3b26b07261c495eb37bc2f9
 var validatorOption ={};
 
 app.use(expressValidator(validatorOption));
@@ -37,15 +32,11 @@ app.use(express.static('public'))
 app.use('/', index)
 app.use('/',user);
 app.use('/',admin);
-<<<<<<< HEAD
-
-=======
 app.use('/',admin1);
 app.use('/',list);
 app.use('/registration',registration);
 app.use('/detail',detail);
-//um để t xem lại. phần subcategory m biết làm chưa ,ok de t lam tiep .
->>>>>>> 8fb49390cf05bc37d3b26b07261c495eb37bc2f9
+
 /* Local Strategy */
 app.post('/loginlc',passport.authenticate('local',{
     failureRedirect:'/login',successRedirect:'/admin',failureFlash:true

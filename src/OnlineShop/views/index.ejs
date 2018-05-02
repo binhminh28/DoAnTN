@@ -66,7 +66,7 @@
                                                 <a href="/login" class="log">Login</a>
                                             </li>
                                             <li>
-                                                <a href="/registration" class="reg">Register</a>
+                                                <a href="Registration.html" class="reg">Register</a>
                                             </li>
                                             <%}else{ %>
                                                 <li>
@@ -140,40 +140,6 @@
                                 <ul class="nav navbar-nav">
                                     <li class="active dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home</a>
-                                        <div class="dropdown-menu">
-                                            <ul class="mega-menu-links">
-                                                <li>
-                                                    <a href="list/thoitrangnu/aothunnu">Áo thun nữ</a>
-                                                </li>
-                                                <li>
-                                                    <a href="home2.html">home2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="home3.html">home3</a>
-                                                </li>
-                                                <li>
-                                                    <a href="productlitst.html">Productlitst</a>
-                                                </li>
-                                                <li>
-                                                    <a href="productgird.html">Productgird</a>
-                                                </li>
-                                                <li>
-                                                    <a href="details.html">Details</a>
-                                                </li>
-                                                <li>
-                                                    <a href="cart.html">Cart</a>
-                                                </li>
-                                                <li>
-                                                    <a href="checkout.html">CheckOut</a>
-                                                </li>
-                                                <li>
-                                                    <a href="checkout2.html">CheckOut2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="contact.html">contact</a>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </li>
                                     <li class="active dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Men</a>
@@ -376,7 +342,6 @@
                     <ul id="hot">
                         <li>
                             <div class="row">
-<<<<<<< HEAD
                                     <% products.forEach(function (pd) { %>
                                         <div  class="col-md-3 col-sm-6" ng-mouseenter="options=true" ng-mouseleave="options=false">
                                             <div class="products" ng-controller="myCtrl">
@@ -414,34 +379,6 @@
                                                         size = "{{size}}"
                                                         type="button" 
                                                         ng-click="addItem($event)">
-=======
-                                <% products.forEach(function (pd) { %>
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="products">
-                                            <div class="thumbnail">
-                                                <a href="/detail/<%= pd._id %>">
-                                                    <img src="images/products/small/products-03.png" alt="Product Name">
-                                                </a>
-                                            </div>
-                                            <div class="productname">
-                                                <%= pd.productName%>
-                                            </div>
-                                            <h4 class="price">$
-                                                <%= pd.price%>
-                                            </h4>
-                                            <div>
-                                                <span>S</span>|
-                                                <span>M</span>
-                                            </div>
-                                            <div class="button_group">
-                                                <button class="button add-cart" 
-                                                    data="<%=pd._id %>" 
-                                                    money="<%=pd.price%>" 
-                                                    name="<%= pd.productName%>"
-                                                    image="images/products/small/products-03.png" 
-                                                    type="button" 
-                                                    ng-click="addItem($event)">
->>>>>>> 8fb49390cf05bc37d3b26b07261c495eb37bc2f9
                                                         Add To Cart
                                                     </button>
                                                     <button class="button compare" type="button">
