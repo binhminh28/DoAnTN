@@ -124,6 +124,23 @@ router.get('/admin/product/delete/:id', function (req, res) {
   })
 })
 
+router.get('/detail/:id', function (req, res) {
+  var id = req.params.id;
+  DB.GetOneProduct(id, function (cb, data) {
+      if (cb) {
+          res.status(400).json('product not found');
+      } else {
+          DB.GetProductperPage(3,1,function (err, listCate) {
+              if (err) {
+                  res.status(400).json("Can't get Category")
+              } else {
+                  res.render("./user/detail", { products: data, listCate: listCate, hello: req.user })
+              }
+          })
+      }
+  })
+})
+
 function isAuthenticated(req, res, next) {
   if (req.user) {
     DB.checkRole(req.user, function (cb) {
@@ -141,28 +158,6 @@ function isAuthenticated(req, res, next) {
     })
   }
 }
-
-// AWS.config.update({
-//     "accessKeyId":"AKIAJUCBISQQLJMS2CMQ",
-//     "secretAccessKey":"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",
-//     "region":"us-east-2",
-//     endpoint: "http://dynamodb.us-east-2.amazonaws.com"
-// });
-// var docClient = new AWS.DynamoDB.DocumentClient();
-// var params = {
-//     TableName : "SanPham"
-// };
-// docClient.scan(params, function(err, data) {
-//     if (err) {
-//         console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-//     } else {
-//         console.log("Query succeeded.");
-//         data.Items.forEach(function(item) {
-//             sa.push(item);
-//         });
-//     }
-// });
-
 
 
 module.exports = router;

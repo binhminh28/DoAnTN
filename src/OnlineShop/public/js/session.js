@@ -18,7 +18,7 @@
     
                 var matches = (new RegExp(this._generatePrefix() + "=([^;]+);")).exec(document.cookie);
                 if (matches && document.location.protocol !== matches[1]) {
-                   this._clearSession();
+                   //this._clearSession();
                    for (var key in this._cookieCache) {
                        try {
                        window.sessionStorage.setItem(key, this._cookieCache[key]);

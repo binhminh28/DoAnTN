@@ -18,24 +18,31 @@ router.get('/', function (req, res) {
     })
 
 })
-router.get('/detail/:id', function (req, res) {
-    var id = req.params.id;
-    DB.GetOneProduct(id, function (cb, data) {
-        if (cb) {
-            res.status(400).json('product not found');
-        } else {
-            DB.GetAllProduct(function (cb, listCate) {
-                if (cb) {
-                    res.status(400).json("Can't get Category")
-                } else {
-                    res.render("detail", { products: data, listCate: listCate, hello: req.user })
-                }
-            })
-        }
-    })
-})
+
 
 router.get('/cart', function(req, res){
     res.render('checkout');
 })
+
+router.post('/checkout1', (req,res)=>{
+    var product ={
+        id : req.body.productID,
+        sl: req.body.soluong,
+        size: req.body.size
+    }
+    OrderDetail(req.body.productID, req.body.size, req.body.soluong, function(data){
+        console.log(data)
+    });
+    console.log(req.user);
+    
+    res.render('checkout');    
+})
+
+function OrderDetail(productID, size, soluong, data) {
+    var product =[];
+    for (let index = 0; index < productID.length; index++) {
+        product.push({'id': productID[index], 'quantity': soluong[index], 'size': size[index]});
+    }
+    data(product)
+}
 module.exports = router;

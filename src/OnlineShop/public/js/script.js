@@ -5,6 +5,7 @@ app.controller("myCtrl", function ($scope) {
     $scope.products = []
     if (localStorage.getItem('giohang') != null) {
         $scope.Quantity = JSON.parse(localStorage.getItem('giohang')).length
+
         $scope.products = JSON.parse(localStorage.getItem('giohang'));
     }
     $scope.addItem = function (item) {
@@ -13,6 +14,7 @@ app.controller("myCtrl", function ($scope) {
         var item = {
             _id: idproduct,
             sl: 1,
+            size:item.target.attributes.size.value,
             price: item.target.attributes.money.value,
             name:item.target.attributes.name.value,
             image:item.target.attributes.image.value
@@ -61,4 +63,5 @@ app.controller("myCtrl", function ($scope) {
         }
         return total;
     }
+    $scope.size = "S";
 });
