@@ -13,6 +13,7 @@ router.get('/admin',isAuthenticated, function (req, res) {
   if (typeof req.query.page !== 'undefined') {
     currentPage = +req.query.page;
   }
+
   DB.GetProductperPage(pageSize, currentPage, function (err, data, total) {
     if (err) {
       res.status(400).json("produc not found")
@@ -77,7 +78,7 @@ router.get('/admin/product/edit/:id', function (req, res) {
     }
   })
 })
-
+//hàm m mới làm đâu
 router.post('/admin/editproduct/save', function (req, res) {
   var product = {
     masanpham: req.body.masanpham,

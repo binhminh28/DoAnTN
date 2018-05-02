@@ -2,6 +2,7 @@
 
 var app = angular.module("myShoppingList", []);
 app.controller("myCtrl", function ($scope) {
+    debugger;
     $scope.products = []
     if (localStorage.getItem('giohang') != null) {
         $scope.Quantity = JSON.parse(localStorage.getItem('giohang')).length

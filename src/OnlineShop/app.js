@@ -11,7 +11,9 @@ var users = require('./routes/users');
 var adminvao = require('./routes/adminvao');
 var members = require('./routes/members');
 var product = require('./routes/product');
-
+var category = require('./routes/category');
+var registration = require('./routes/registration');
+// var list = require('./routes/list');
 var app = express();
 
 
@@ -35,6 +37,9 @@ app.use('/users', users);
 app.use('/adminvao', adminvao);
 app.use('/members', members);
 app.use('/product', product);
+app.use('/category',category);
+app.use('/registration',registration);
+// app.use('/list',list);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
