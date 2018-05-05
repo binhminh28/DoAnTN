@@ -12,7 +12,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,700,500italic,100italic,100' rel='stylesheet' type='text/css'>
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen"/>
-    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="css/style1.css" rel="stylesheet" type="text/css">
     <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
 </script>
@@ -520,7 +520,7 @@
                       Billing information
                     </a>
                     <div class="step-description">
-                      <form>
+                      <form method="POST" enctype="application/x-www-form-urlencoded">
                         <div class="row">
                           <div class="col-md-6 col-sm-6">
                             <div class="your-details">
@@ -534,7 +534,7 @@
                                     *
                                   </strong>
                                 </label>
-                                <input type="text" class="input namefild" name="">
+                                <input type="text" class="input namefild" name="firstname">
                               </div>
                               <div class="form-row">
                                 <label class="lebel-abs">
@@ -543,7 +543,7 @@
                                     *
                                   </strong>
                                 </label>
-                                <input type="text" class="input namefild" name="">
+                                <input type="text" class="input namefild" name="lastname">
                               </div>
                               <div class="form-row">
                                 <label class="lebel-abs">
@@ -552,7 +552,7 @@
                                     *
                                   </strong>
                                 </label>
-                                <input type="text" class="input namefild" name="">
+                                <input type="text" class="input namefild" name="email">
                               </div>
                               <div class="form-row">
                                 <label class="lebel-abs">
@@ -561,7 +561,7 @@
                                     *
                                   </strong>
                                 </label>
-                                <input type="text" class="input namefild" name="">
+                                <input type="text" class="input namefild" name="phone">
                               </div>
                               <div class="form-row">
                                 <label class="lebel-abs">
@@ -580,26 +580,6 @@
                                   </strong>
                                 </label>
                                 <input type="text" class="input namefild" name="">
-                              </div>
-                              <div class="pass-wrap">
-                                <div class="form-row">
-                                  <label class="lebel-abs">
-                                    Your Password 
-                                    <strong class="red">
-                                      *
-                                    </strong>
-                                  </label>
-                                  <input type="password" class="input namefild" name="">
-                                </div>
-                                <div class="form-row">
-                                  <label class="lebel-abs">
-                                    Confird Your Password 
-                                    <strong class="red">
-                                      *
-                                    </strong>
-                                  </label>
-                                  <input type="password" class="input cpass" name="">
-                                </div>
                               </div>
                               <p>
                                 <span class="input-radio">
@@ -626,57 +606,12 @@
                               </h5>
                               <div class="form-row">
                                 <label class="lebel-abs">
-                                  Address 01 
+                                  Address
                                   <strong class="red">
                                     *
                                   </strong>
                                 </label>
-                                <input type="text" class="input namefild" name="">
-                              </div>
-                              <div class="form-row">
-                                <label class="lebel-abs">
-                                  Address 02
-                                  <strong class="red">
-                                    *
-                                  </strong>
-                                </label>
-                                <input type="text" class="input namefild" name="">
-                              </div>
-                              <div class="form-row">
-                                <label class="lebel-abs">
-                                  City 
-                                  <strong class="red">
-                                    *
-                                  </strong>
-                                </label>
-                                <input type="text" class="input namefild" name="">
-                              </div>
-                              <div class="form-row">
-                                <label class="lebel-abs">
-                                  Pass Code 
-                                  <strong class="red">
-                                    *
-                                  </strong>
-                                </label>
-                                <input type="text" class="input namefild" name="">
-                              </div>
-                              <div class="form-row">
-                                <label class="lebel-abs">
-                                  Country 
-                                  <strong class="red">
-                                    *
-                                  </strong>
-                                </label>
-                                <input type="text" class="input namefild" name="">
-                              </div>
-                              <div class="form-row">
-                                <label class="lebel-abs">
-                                  Region / State 
-                                  <strong class="red">
-                                    *
-                                  </strong>
-                                </label>
-                                <input type="text" class="input namefild" name="">
+                                <input type="text" class="input namefild" name="address">
                               </div>
                               <p class="privacy">
                                 <span class="input-radio">
@@ -689,9 +624,8 @@
                                   </a>
                                 </span>
                               </p>
-                              <button>
-                                Continue
-                              </button>
+                                <button formaction="/paycod">Pay COD</button>
+                                <button formaction="/pay">Payment via Paypal</button>
                             </div>
                           </div>
                         </div>
