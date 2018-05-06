@@ -436,7 +436,7 @@ exports.GetProductperPageCategory = function (pagesize, pagenumber, callback) {
                         $set: {
                             CateId: product.idloai,
                             Name: product.tenloai,
-                            subCategory: product.subCategory,
+                            SubCategory: product.subCategory,
                         }
                     }
                     console.log("Updating the item...");
@@ -489,6 +489,7 @@ exports.GetProductperPageCategory = function (pagesize, pagenumber, callback) {
             Name: product.ten,
             SubCategory: product.subcategory
         };
+        console.log("2 => ")
         console.log(params)
         var cursor = db.collection('Category').insertOne(params, function (err, data) {
             if (err) {
