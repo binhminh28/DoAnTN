@@ -1,9 +1,13 @@
 <% layout('../../layoutAdmin') %>
 
 
-    <form class="ui form" action="/admin/createcategory/save" method="POST" ng-app="myApp" enctype='multipart/form-data'>
+    <form class="ui form" action="/admin/createproduct/save" method="POST" ng-app="myApp" enctype='multipart/form-data'>
         <h2 class="ui dividing header">Create Product</h2>
 
+        <div class="field">
+            <label>Image</label>
+            <input type="file" name="hinhsp" placeholder="Product Name" multiple>
+        </div>
         <div class="ui error message"></div>
         <div class="field">
             <label>Name</label>
@@ -53,12 +57,10 @@
         <script>
             var a = [], b = []
             var app = angular.module("myApp", []);
-
             '<% listCate.forEach(function(item, index){ %>'
                 a.push(JSON.parse('<%- JSON.stringify(listCate[index]) %>'))
                 b.push(JSON.parse('<%- JSON.stringify(listCate[index].SubCategory)%>'))
             '<% }) %>'
-
             var option1Options = a;
             var option2Options = b;
             console.log(b)
@@ -81,7 +83,7 @@
             });
         </script>
 
-        <div class="field"
+        <div class="field">
             <label>Description</label>
             <textarea name="gioithieu" placeholder="Enter description of the product" id="ckeditor"></textarea>
         </div>

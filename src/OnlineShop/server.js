@@ -6,11 +6,11 @@ var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var index = require('./routes/index')
 var user = require('./routes/users')
+var order = require('./routes/admin/order')
 var admin = require('./routes/admin/product')
 var admin1= require('./routes/admin/category')
 var list = require('./routes/list/list')
 var registration = require('./routes/registration')
-// var category = require('./routes/admin/category')
 var detail = require('./routes/detail')
 var app = express()
 var validatorOption ={};
@@ -34,6 +34,7 @@ app.use('/',user);
 app.use('/',admin);
 app.use('/',admin1);
 app.use('/',list);
+app.use('/',order);
 app.use('/registration',registration);
 app.use('/detail',detail);
 

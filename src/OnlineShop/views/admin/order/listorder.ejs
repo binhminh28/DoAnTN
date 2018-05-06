@@ -1,0 +1,135 @@
+<% layout('../../layoutAdmin') %>
+
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-table"></i> Danh sách đặt hàng</div>
+        <div>
+            <% if(message.length >0){ %>
+                <script src="/js/Semantic-UI-Alert.js"></script>
+                <script>
+                    $.uiAlert({
+                        textHead: 'Success!', // header
+                        text: '<%= message %>', // Text
+                        bgcolor: '#19c3aa', // background-color
+                        textcolor: '#fff', // color
+                        position: 'top-right',// position . top And bottom ||  left / center / right
+                        icon: 'checkmark box', // icon in semantic-UI
+                        time: 3, // time
+                    })
+                </script>
+                <% } %>
+
+        </div>
+        <div class="card-body">
+            <table class="ui striped table table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Tên người đặt</th>
+                        <th>Mã đơn hàng</th>
+                        <th>Địa chỉ nhận hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng giá trị</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orders.forEach(function (order) { %>
+                        <tr>
+                            <td>
+                                <img src="" width="150px" />
+                            </td>
+                            <td>
+                                <%= order.fullname%>
+                            </td>
+                            <td>
+                                <%= order._id%>
+                            </td>
+                            <td>
+                                <%= order.address%>
+                            </td>
+                            <td>
+                                <span class="xxx">
+                                </span>
+                                <script>
+                                    var date = new Date('<%= order.datetime %>');
+                                    $(".xxx").append(date.getDate() + "/" +
+                                        date.getMonth() + "/" +
+                                        date.getFullYear() + " " +
+                                        date.getHours() + ":" +
+                                        date.getMinutes() + ":" +
+                                        date.getSeconds());
+                                </script>
+                            </td>
+                            <td>
+                                <%= order.total%>
+                            </td>
+                            <td>
+                                <% if(order.status === "Waiting"){ %>
+                                    <span class="red">Waiting</span>
+                                <% } else{ %>
+                                    <%= order.status%>
+                                <% } %>
+                            </td>
+                            <td>
+                                <p style="color: #4800ff">
+                                    <a href="/admin/order/<%= order._id %>" id="Detail">Detail</a>
+                                    <% if(order.status === "Waiting"){ %>
+                                        |<a href="/order/approve/<%= order._id %>" id="Approve" onclick="return confirm('Are you sure you want to approve <%= order._id%>? ')">Approve</a>
+                                    <% } else if(order.status === "Delivering"){ %>
+                                        |<a href="/order/finish/<%= order._id %>" id="Approve" onclick="return confirm('Are you sure you want to finish delivery <%= order._id%>? ')">Finish</a>
+                                    <% } %>
+                                </p>
+                            </td>
+                        </tr>
+                        <% })%>
+                </tbody>
+            </table>
+            <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
+            <% if (pageCount > 1) { %>
+                <ul class="pagination">
+                    <% if (currentPage > 1) { %>
+                        <li>
+                            <a href="/admin/?page=1">&laquo;</a>
+                        </li>
+                        <% } %>
+                            <% var i = 1;
+                  if (currentPage > 5) {
+                  i = +currentPage - 4;
+                  } %>
+                                <% if (i !== 1) { %>
+                                    <li class="disabled">
+                                        <a href="#">...</a>
+                                    </li>
+                                    <% } %>
+                                        <% for (i; i<=pageCount; i++) { %>
+                                            <% if (currentPage == i) { %>
+                                                <li class="active">
+                                                    <span>
+                                                        <%= i %>
+                                                            <span class="sr-only">(current)</span>
+                                                    </span>
+                                                </li>
+                                                <% } else { %>
+                                                    <li>
+                                                        <a href="/admin/?page=<%= i %>">
+                                                            <%= i %>
+                                                        </a>
+                                                    </li>
+                                                    <% } %>
+                                                        <% if (i == (+currentPage + 4)) { %>
+                                                            <li class="disabled">
+                                                                <a href="#">...</a>
+                                                            </li>
+                                                            <% break; } %>
+                                                                <% } %>
+                                                                    <% if (currentPage != pageCount) { %>
+                                                                        <li>
+                                                                            <a href="/admin/?page=<%= pageCount %>">&raquo;</a>
+                                                                        </li>
+                                                                        <% } %>
+                </ul>
+                <% } %>
+        </div>
+    </div>

@@ -7,10 +7,11 @@ var app = express();
 /* GET home page. */
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'AWZVInM4D-55Fa8GUBPyKxe9OIbIgc6_BOBh6Gi8aQFemflUMcP9K0J2mFg3wIVyeCq26OAwhdKL24zX',
-    'client_secret': 'ENnFza6H5z7b2H2tbPF3rqANg_kse9C7lTXtycYJUAYVIaVb5VP1pqeC_AbJAZbIL6K6rFshzLdj1eu0'
+    'client_id': 1,
+    'client_secret': 2
 });
-
+// 1: AWZVInM4D-55Fa8GUBPyKxe9OIbIgc6_BOBh6Gi8aQFemflUMcP9K0J2mFg3wIVyeCq26OAwhdKL24zX
+// 2: EPo-oV7NhihPXBq2L0y20d9aVfQSVh6IY0lTFyNw5ktQmQvRz1laD9AU8Wi8YN85ecAWJZ-ryRW3RtYU
 router.get('/', function (req, res) {
     DB.GetAllProduct(function (cb, listproduct) {
         if (cb) {
@@ -38,97 +39,160 @@ router.get('/detail/:id', function (req, res) {
     })
 })
 
-router.get('/cart', function(req, res){
+router.get('/cart', function (req, res) {
     res.render('checkout');
 })
-router.post('/checkout1', (req,res)=>{
-    var product ={
-        id : req.body.productID,
-        sl: req.body.soluong,
-        size: req.body.size
-    }
-    OrderDetail(req.body.productID, req.body.size, req.body.soluong, function(data){
-        console.log(data)
+
+function CheckQuantity(data, callback) {
+    data.forEach(element => {
+        if (element.soluong <= 0) {
+            res.status(400).json("quantity must be greater than zero")
+            callback(true)
+        } else {
+            callback(false)
+        }
     });
-    console.log(req.user);
-    res.render('checkout2');    
+}
+var temp = new Array();
+router.post('/checkout1', (req, res) => {
+    OrderDetail(req.body.productID, req.body.size, req.body.soluong, function (data) {
+        temp = data
+        res.render('checkout2');
+    })
 })
 
 function OrderDetail(productID, size, soluong, data) {
-    var product =[];
+    var product = [];
     for (let index = 0; index < productID.length; index++) {
-        product.push({'id': productID[index], 'quantity': soluong[index], 'size': size[index]});
+        product.push({ 'id': productID[index], 'quantity': soluong[index], 'size': size[index] });
     }
     data(product)
 }
 
-app.post('/pay', (req, res) => {
-    const create_payment_json = {
-      "intent": "sale",
-      "payer": {
-          "payment_method": "paypal"
-      },
-      "redirect_urls": {
-          "return_url": "http://localhost:8081/success",
-          "cancel_url": "http://localhost:8081/cancel"
-      },
-      "transactions": [{
-          "item_list": {
-              "items": [{
-                  "name": "Red Sox Hat",
-                  "sku": "001",
-                  "price": "25.00",
-                  "currency": "USD",
-                  "quantity": 1
-              }]
-          },
-          "amount": {
-              "currency": "USD",
-              "total": "25.00"
-          },
-          "description": "Hat for the best team ever"
-      }]
-  };
-  
-  paypal.payment.create(create_payment_json, function (error, payment) {
-    if (error) {
-        throw error;
-    } else {
-        for(let i = 0;i < payment.links.length;i++){
-          if(payment.links[i].rel === 'approval_url'){
-            res.redirect(payment.links[i].href);
-          }
-        }
+router.post('/paycod', (req, res) => {
+    if (temp === "undefined") { res.redirect('/checkout1') }
+    var order = {
+        fullname: req.body.firstname + " " + req.body.lastname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        username: req.user,
+        orderDetail: temp,
+        status:"Waiting"
     }
-  });
-  
-  });
-  
-  app.get('/success', (req, res) => {
+
+    CheckQuantity(temp, (cb) => {
+        if (cb) {
+            res.status(400).json("quantity must be greater than zero")
+        }
+    })
+    DB.CreateOrder(order, (cb) => {
+        if (cb) {
+            res.status(400).json("We can't process your payment right now, so please try again later");
+        } else {
+            res.redirect('/');
+        }
+    })
+})
+
+router.post('/pay', async (req, res) => {
+    DB.GetTotal(temp, (cb) => {
+        console.log(temp)
+        const create_payment_json = {
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "redirect_urls": {
+                "return_url": "http://localhost:8081/success",
+                "cancel_url": "http://localhost:8081/cancel"
+            },
+            "transactions": [{
+                "item_list": {
+                    "items": [{
+                        "name": "item",
+                        "sku": "item",
+                        "price": cb,
+                        "currency": "USD",
+                        "quantity": 1
+                    }]
+                },
+                "amount": {
+                    "currency": "USD",
+                    "total": cb
+                },
+                "description": "the best team ever"
+            }]
+        };
+
+        paypal.payment.create(create_payment_json, function (error, payment) {
+            if (error) {
+                console.error("Error JSON:", JSON.stringify(error, null, 2));
+            } else {
+                for (let i = 0; i < payment.links.length; i++) {
+                    if (payment.links[i].rel === 'approval_url') {
+                        res.redirect(payment.links[i].href);
+                    }
+                }
+            }
+        });
+
+    })
+});
+
+router.get('/success', (req, res) => {
+
+    if (temp === "undefined") { res.redirect('/checkout1') }
+    
+
+    CheckQuantity(temp, (cb) => {
+        if (cb) {
+            res.status(400).json("Quantity must be greater than zero")
+        }
+    })
+    
+
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
-  
-    const execute_payment_json = {
-      "payer_id": payerId,
-      "transactions": [{
-          "amount": {
-              "currency": "USD",
-              "total": "25.00"
-          }
-      }]
-    };
-  
-    paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
-      if (error) {
-          console.log(error.response);
-          throw error;
-      } else {
-          console.log(JSON.stringify(payment));
-          res.send('Success');
-      }
-  });
-  });
-  
-  app.get('/cancel', (req, res) => res.send('Cancelled'));
+    DB.GetTotal(temp, (cb) => {
+        const execute_payment_json = {
+            "payer_id": payerId,
+            "transactions": [{
+                "amount": {
+                    "currency": "USD",
+                    "total": cb
+                }
+            }]
+        }
+        paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+            if (error) {
+                console.log(error.response);
+                throw error;
+            } else {
+                console.log(payment);
+                var order = {
+                    fullname: payment.payer.payer_info.first_name + " " + payment.payer.payer_info.last_name,
+                    address: req.body.address,
+                    email: payment.payer.payer_info.email,
+                    phone: req.body.phone,
+                    username: req.user,
+                    orderDetail: temp,
+                    status:payment.state
+                }
+                DB.CreateOrder(order, (cb) => {
+                    if (cb) {
+                        res.status(400).json("We can't process your payment right now, so please try again later");
+                    } else {
+                        res.redirect('/')
+                    }
+                })
+            }
+        });
+    });
+
+    
+});
+
+router.get('/cancel', (req, res) => res.send('Cancelled'));
 
 module.exports = router;
