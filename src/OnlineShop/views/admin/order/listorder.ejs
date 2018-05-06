@@ -36,7 +36,7 @@
                 </thead>
                 <tbody>
                     <% orders.forEach(function (order) { %>
-                        <tr>
+                        <tr class='clickable-row' data-href='/admin/order/<%= order._id %>'>
                             <td>
                                 <img src="" width="150px" />
                             </td>
@@ -50,11 +50,11 @@
                                 <%= order.address%>
                             </td>
                             <td>
-                                <span class="xxx">
+                                <span class="<%= order._id%>">
                                 </span>
                                 <script>
                                     var date = new Date('<%= order.datetime %>');
-                                    $(".xxx").append(date.getDate() + "/" +
+                                    $(".<%= order._id%>").append(date.getDate() + "/" +
                                         date.getMonth() + "/" +
                                         date.getFullYear() + " " +
                                         date.getHours() + ":" +

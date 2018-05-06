@@ -123,7 +123,7 @@
                                 </td>
                                 <td>
                                     <h5>
-                                        <%= pd.price %>
+                                        $ <%= pd.price %>
                                     </h5>
                                 </td>
                                 <td>
@@ -138,7 +138,7 @@
                                 <td>
                                     <h5>
                                         <strong class="red">
-                                            <%= pd.price %>
+                                            $ <%= pd.price %>
                                         </strong>
                                     </h5>
                                 </td>
@@ -150,20 +150,21 @@
                 <tfoot>
                     <tr>
                         <h3 class="red pull-right">
-                            <p>Total: <%= order.total %></p>
+                            <p>Total: $ <%= order.total %></p>
                         </h3>
                     </tr>
                     <tr>
                         <td colspan="6">
-                            <button class="pull-left ui button">
-                                Reject
-                            </button>
-                            <% if(order.status === "Waiting"){ %>
+                            <% if(order.status === "Waiting" || order.status != "Delivering" && order.status != "Rejected" ){ %>
+                                <button class="pull-left ui button">
+                                        <a href="/order/reject/<%= order._id %>" id="Reject" onclick="return confirm('Are you sure you want to reject <%= order._id%>? ')">Reject</a>
+                                </button>
+                            <% } if(order.status === "Waiting"){ %>
                                 <button class=" pull-right ui button">
                                     <a href="/order/approve/<%= order._id %>" id="Approve" onclick="return confirm('Are you sure you want to approve <%= order._id%>? ')">Approve</a>
                                 </button>
                                 
-                            <% } else if(order.status === "Delivery"){ %>
+                            <% } else if(order.status === "Delivering"){ %>
                                 <button class=" pull-right ui button">
                                     <a href="/order/approve/<%= order._id %>" id="Delivery" onclick="return confirm('Are you sure you want to finish this order <%= order._id%>? ')">Finish</a>
                                 </button>

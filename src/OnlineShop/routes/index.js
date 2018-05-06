@@ -7,8 +7,8 @@ var app = express();
 /* GET home page. */
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 1,
-    'client_secret': 2
+    'client_id': 'AWZVInM4D-55Fa8GUBPyKxe9OIbIgc6_BOBh6Gi8aQFemflUMcP9K0J2mFg3wIVyeCq26OAwhdKL24zX',
+    'client_secret': 'EPo-oV7NhihPXBq2L0y20d9aVfQSVh6IY0lTFyNw5ktQmQvRz1laD9AU8Wi8YN85ecAWJZ-ryRW3RtYU'
 });
 // 1: AWZVInM4D-55Fa8GUBPyKxe9OIbIgc6_BOBh6Gi8aQFemflUMcP9K0J2mFg3wIVyeCq26OAwhdKL24zX
 // 2: EPo-oV7NhihPXBq2L0y20d9aVfQSVh6IY0lTFyNw5ktQmQvRz1laD9AU8Wi8YN85ecAWJZ-ryRW3RtYU
@@ -43,15 +43,15 @@ router.get('/cart', function (req, res) {
     res.render('checkout');
 })
 
-function CheckQuantity(data, callback) {
-    data.forEach(element => {
-        if (element.soluong <= 0) {
-            res.status(400).json("quantity must be greater than zero")
-            callback(true)
+var check = true;
+function CheckQuantity(data) {
+    for (let index = 0; index < data.length; index++) {
+        if (data[index].quantity <= 0) {
+            check = true
         } else {
-            callback(false)
-        }
-    });
+            check = false
+        } 
+    }
 }
 var temp = new Array();
 router.post('/checkout1', (req, res) => {
@@ -63,13 +63,19 @@ router.post('/checkout1', (req, res) => {
 
 function OrderDetail(productID, size, soluong, data) {
     var product = [];
-    for (let index = 0; index < productID.length; index++) {
-        product.push({ 'id': productID[index], 'quantity': soluong[index], 'size': size[index] });
+    if(productID.constructor === Array)
+    {
+        for (let index = 0; index < productID.length; index++) {
+            product.push({ 'id': productID[index], 'quantity': soluong[index], 'size': size[index] });
+        }
+        data(product)
+    }else{
+        product.push({ 'id': productID, 'quantity': soluong, 'size': size});
+        data(product)
     }
-    data(product)
 }
 
-router.post('/paycod', (req, res) => {
+router.post('/paycod',async (req, res) => {
     if (temp === "undefined") { res.redirect('/checkout1') }
     var order = {
         fullname: req.body.firstname + " " + req.body.lastname,
@@ -78,21 +84,23 @@ router.post('/paycod', (req, res) => {
         phone: req.body.phone,
         username: req.user,
         orderDetail: temp,
-        status:"Waiting"
+        status: "Waiting"
+    }
+    CheckQuantity(temp)
+    if(check){
+        res.status(400).json("Quantity must be greater than zero")
+    }else{
+        DB.CreateOrder(order, (error) => {
+            if (error) {
+                res.status(400).json("We can't process your payment right now, so please try again later");
+            } else {
+                res.redirect('/');
+            }
+        })
     }
 
-    CheckQuantity(temp, (cb) => {
-        if (cb) {
-            res.status(400).json("quantity must be greater than zero")
-        }
-    })
-    DB.CreateOrder(order, (cb) => {
-        if (cb) {
-            res.status(400).json("We can't process your payment right now, so please try again later");
-        } else {
-            res.redirect('/');
-        }
-    })
+    
+
 })
 
 router.post('/pay', async (req, res) => {
@@ -143,14 +151,14 @@ router.post('/pay', async (req, res) => {
 router.get('/success', (req, res) => {
 
     if (temp === "undefined") { res.redirect('/checkout1') }
-    
+
 
     CheckQuantity(temp, (cb) => {
         if (cb) {
             res.status(400).json("Quantity must be greater than zero")
         }
     })
-    
+
 
     const payerId = req.query.PayerID;
     const paymentId = req.query.paymentId;
@@ -177,7 +185,7 @@ router.get('/success', (req, res) => {
                     phone: req.body.phone,
                     username: req.user,
                     orderDetail: temp,
-                    status:payment.state
+                    status: payment.state
                 }
                 DB.CreateOrder(order, (cb) => {
                     if (cb) {
@@ -190,7 +198,7 @@ router.get('/success', (req, res) => {
         });
     });
 
-    
+
 });
 
 router.get('/cancel', (req, res) => res.send('Cancelled'));

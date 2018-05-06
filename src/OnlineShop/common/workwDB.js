@@ -539,7 +539,26 @@ exports.FinishOrder = function (id, callback) {
     var query = { _id: ObjectId(id) }
     var ApproveOrder = {
         $set: {
-            status: "Finished"
+            status: "Finished",
+            paystatus: "Paid"
+        }
+    }
+    console.log("Update the order...");
+    db.collection('Order').updateOne(query, ApproveOrder, function (err) {
+        if (err) {
+            console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+            callback(true)
+        } else {
+            callback(false)
+        }
+    })
+}
+
+exports.RejectOrder = function (id, callback) {
+    var query = { _id: ObjectId(id) }
+    var ApproveOrder = {
+        $set: {
+            status: "Rejected"
         }
     }
     console.log("Update the order...");
@@ -611,25 +630,40 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function GetTotal(dataorder, callback) {
-    var total = 0;
-    dataorder.forEach(element => {
-        db.collection('Product').find(ObjectId(element.id)).toArray(function (err, data) {
+
+var total = 0;
+function GetTotal(dataorder, callback) {
+    for (let index = 0; index < dataorder.length; index++) {
+        db.collection('Product').find(ObjectId(dataorder[index].id)).toArray(function (err, data) {
             if (err) {
                 console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
             } else {
                 if (data.length > 0) {
-                    total += Number.parseFloat(data[0].price) * Number.parseInt(element.quantity)
-
+                    total += Number.parseFloat(data[0].price) * Number.parseInt(dataorder[index].quantity)
                 }
             }
         })
-    })
-    await sleep(7000);
+    }
+    //await sleep(7000);
     return total
 }
 
 exports.CreateOrder = async function (order, callback) {
+    // function sleep(ms) {
+    //     return new Promise(resolve => setTimeout(resolve, ms));
+    // }
+    // var xxx = new Promise(async (resolve, reject) => {
+    //     if(total===0){
+    //         resolve(total)
+    //     }else if(total!=0){
+    //         await GetTotal(order.orderDetail)
+    //         console.log("=>" + total)
+    //     }
+    // })
+    // console.log(total)
+    // await sleep(7000);
+    // console.log(total)
+    
     var params = {
         name: order.username,
         address: order.address,
@@ -637,19 +671,18 @@ exports.CreateOrder = async function (order, callback) {
         email: order.email,
         fullname: order.fullname,
         OrderDetails: order.orderDetail,
-        total: await GetTotal(order.orderDetail),
+        total: total,
         datetime: new Date(),
         status: "Waiting",
         paystatus:order.status
     };
-    console.log(params)
-    var cursor = db.collection('Order').insertOne(params, function (err, data) {
-        if (err) {
-            console.error("Error JSON:", JSON.stringify(err, null, 2));
-            callback(true)
-        } else {
-            console.log("Success")
-            callback(false);
-        }
-    })
+    // var cursor = db.collection('Order').insertOne(params, function (err, data) {
+    //     if (err) {
+    //         console.error("Error JSON:", JSON.stringify(err, null, 2));
+    //         callback(true)
+    //     } else {
+    //         console.log("Success")
+    //         callback(false);
+    //     }
+    // })
 }

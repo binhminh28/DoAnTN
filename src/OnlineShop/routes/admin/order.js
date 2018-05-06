@@ -72,4 +72,15 @@ router.get('/order/finish/:id', (req, res) =>{
         }
     })
 })
+
+router.get('/order/reject/:id', (req, res) =>{
+    var id = req.params.id;
+    DB.RejectOrder(id, (cb)=>{
+        if(cb){
+            res.status(400).json('Error')
+        }else{
+            res.redirect("/admin/order")
+        }
+    })
+})
 module.exports = router;
